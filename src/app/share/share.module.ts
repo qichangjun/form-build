@@ -4,6 +4,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ColorPickerDirective } from './directive/color-picker.directive';
+import { CollapsibleTreeDirective } from './directive/collapsibleTree.directive';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,8 +17,9 @@ import { ColorPickerDirective } from './directive/color-picker.directive';
     CommonModule,
     HttpModule,
     FormsModule,ReactiveFormsModule,
-    RouterModule,ColorPickerDirective
+    RouterModule,ColorPickerDirective,
+    CollapsibleTreeDirective
   ],
-  declarations: [ColorPickerDirective]
+  declarations: [ColorPickerDirective,CollapsibleTreeDirective]
 })
 export class ShareModule { }
