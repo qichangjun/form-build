@@ -1,0 +1,154 @@
+
+    <div style="width: 20%;
+    float: left;">
+        <p>
+            编辑节点
+        </p>
+        <div *ngIf="editingTile">
+            <div>
+                <span>宽度:</span>
+                <mat-form-field>
+                    <mat-select [(ngModel)]="editingTile.cols">
+                        <mat-option *ngFor="let width of widhtLength" [value]="width">
+                            {{width}}/12
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <span>高度:</span>
+                <input type="text" [(ngModel)]="editingTile.rows">
+            </div>
+            <div>
+                <button [disabled]="editingTile.style['text-align']=='left' || !editingTile.style['text-align']" (click)="editingTile.style['text-align']='left'">居左</button>
+                <button [disabled]="editingTile.style['text-align']=='center'" (click)="editingTile.style['text-align']='center'">居中</button>
+                <button [disabled]="editingTile.style['text-align']=='right'" (click)="editingTile.style['text-align']='right'">居右</button>
+            </div>
+          <div>
+              <span>字体颜色</span>
+              <i [(colorPicker)]="editingTile.style.fontColor" [style.color]="editingTile.style.fontColor" class="fa fa-address-book" aria-hidden="true"></i>               
+          </div>
+          <div>
+                <span>背景颜色</span>
+                <i [(colorPicker)]="editingTile.style.backgroundColor" [style.color]="editingTile.style.backgroundColor" class="fa fa-address-book" aria-hidden="true"></i>                  
+            </div>
+            <div>
+                <span>类型:</span>
+                <mat-form-field>
+                    <mat-select [(ngModel)]="editingTile.contentType" (selectionChange)="changeContentType(editingTile.contentType)">
+                        <mat-option *ngFor="let contentType of contentTypes" [value]="contentType.value">
+                            {{contentType.displayName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div [ngSwitch]="editingTile.contentType">
+                <div *ngSwitchCase="'label'">
+                    <span>标题名</span>
+                    <input type="text" [(ngModel)]="editingTile.labelName">
+                </div>
+                <div *ngSwitchCase="'input'">
+                    <span>绑定的字段名</span>
+                    <input type="text" [(ngModel)]="editingTile.attrName">
+                </div>
+                <div *ngSwitchCase="'text-area'">
+                    <span>绑定的字段名</span>
+                    <input type="text" [(ngModel)]="editingTile.attrName">
+                </div>
+                <div *ngSwitchCase="'radio-button'">
+                    <div>
+                        <span>绑定的字段名</span>
+                        <input type="text" [(ngModel)]="editingTile.attrName">
+                    </div>
+                    <span>编辑单选框选项</span>
+                    <ul>
+                        <li *ngFor="let radioAttr of editingTile.radioBtnAttrs;let i = index;">
+                            <input type="text" [value]="editingTile.radioBtnAttrs[i]" (blur)="editingTile.radioBtnAttrs[i] = $event.target.value">
+                            <span (click)="editingTile.radioBtnAttrs.splice(i,1);">X</span>
+                        </li>
+                    </ul>
+
+                    <span (click)="editingTile.radioBtnAttrs.push('选项' + editingTile.radioBtnAttrs.length)">+</span>
+                </div>
+
+                <div *ngSwitchCase="'check-box'">
+                    <div>
+                        <span>绑定的字段名</span>
+                        <input type="text" [(ngModel)]="editingTile.attrName">
+                    </div>
+
+                    <span>编辑多选框选项</span>
+                    <ul>
+                        <li *ngFor="let radioAttr of editingTile.checkBoxAttrs;let i = index;">
+                            <input type="text" [value]="editingTile.checkBoxAttrs[i]" (blur)="editingTile.checkBoxAttrs[i] = $event.target.value">
+                            <span (click)="editingTile.checkBoxAttrs.splice(i,1);">X</span>
+                        </li>
+                    </ul>
+
+                    <span (click)="editingTile.checkBoxAttrs.push('选项' + editingTile.checkBoxAttrs.length)">+</span>
+                </div>
+                <div *ngSwitchCase="'select'">
+                    <div>
+                        <span>绑定的字段名</span>
+                        <input type="text" [(ngModel)]="editingTile.attrName">
+                    </div>
+                    <span>编辑下拉菜单选项</span>
+                    <ul>
+                        <li *ngFor="let radioAttr of editingTile.selectAttrs;let i = index;">                            
+                            <input type="text" [value]="editingTile.selectAttrs[i]" (blur)="editingTile.selectAttrs[i] = $event.target.value">                                                    
+                            <span (click)="editingTile.selectAttrs.splice(i,1);">X</span>
+                        </li>
+                    </ul>
+                    <span (click)="editingTile.selectAttrs.push('选项' + editingTile.selectAttrs.length)">+</span>
+                </div>
+                <div *ngSwitchDefault>请选择一个类型</div>
+            </div>
+        </div>
+    </div>
+    <div style="float: left;width: 80%;">
+        <div>
+            <button  *ngFor="let button of contentTypes" (click)="addElement(button)">添加{{button.displayName}}</button>
+        </div>
+        <mat-grid-list dnd-sortable-container [sortableData]="tiles" #container gutterSize="0" cols="12" rowHeight="50px">
+            <mat-grid-tile dnd-sortable [sortableIndex]="i" mwlResizable [validateResize]="validate" [resizeEdges]="{bottom: false, right: false, top: false, left: false}"
+                [enableGhostResize]="true" [resizeSnapGrid]="{left: 50, right: 50}" (resizing)="onResizeEnd($event,tile)" style="border:0.5px solid black;"
+                *ngFor="let tile of tiles;let i = index" (click)="editingTile=tile" [colspan]="tile.cols"
+                [rowspan]="tile.rows" [ngClass]="{'active':editingTile==tile}" [style.background]="tile.color">
+                <img style="position: absolute;
+          right: 0px;
+          bottom: 0px;" src="http://i.imgur.com/eqzz2dl.gif" class="resize-handle" mwlResizeHandle [resizeEdges]="{bottom: true, right: true}">
+                <div [ngSwitch]="tile.contentType" style="width:100%;padding: 15px;height: 100%;"
+                [style.textAlign]="tile.style['text-align']"
+                [style.color]="tile.style.fontColor"
+                [style.background]="tile.style.backgroundColor"
+                >
+                    <div *ngSwitchCase="'label'">
+                        <span>{{tile.labelName}}</span>
+                    </div>
+                    <div *ngSwitchCase="'input'">
+                        <input type="text">
+                    </div>
+                    <div *ngSwitchCase="'radio-button'">
+                        <mat-radio-group>
+                            <mat-radio-button *ngFor="let radioAttr of tile.radioBtnAttrs" [value]="radioAttr">{{radioAttr}}</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div *ngSwitchCase="'check-box'">
+                        <section class="example-section">
+                            <mat-checkbox *ngFor="let checkBoxAttr of tile.checkBoxAttrs" class="example-margin">{{checkBoxAttr}}</mat-checkbox>
+                        </section>
+                    </div>
+                    <div *ngSwitchCase="'select'">
+                        <select>
+                            <option *ngFor="let selectAttr of tile.selectAttrs" [value]="selectAttr">{{selectAttr}}</option>
+                        </select>
+                    </div>
+                    <div *ngSwitchCase="'text-area'">
+                        <textarea></textarea>
+                    </div>
+                    <div *ngSwitchDefault>请选择一个类型</div>
+                </div>
+                <button style="position: absolute;top:0px;right: 0px;" (click)="tiles.splice(i,1);editingTile=null">x</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
