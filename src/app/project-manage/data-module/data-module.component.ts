@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { UUID } from 'angular2-uuid';
+import Swal from 'sweetalert2'
+declare var XML: any;
 @Component({
   selector: 'app-data-module',
   templateUrl: './data-module.component.html',
@@ -8,7 +11,7 @@ import * as _ from 'lodash';
 export class DataModuleComponent implements OnInit {
   nodes =  {
     "-name": '12',
-    "code" : '231232',
+    "code" : UUID.UUID(),
     "type" : "record",
     "children": [],
     "property": [],
@@ -21,28 +24,64 @@ export class DataModuleComponent implements OnInit {
   TYPE_FILE = 'file'
   TYPE_NODE = 'node'
   hasNode : boolean = false;
+  nameList = []
   constructor() { }
 
   ngOnInit() {
   }
 
+  async getSysAttr(){
+    
+  }
+
   addBlock(d){
-    let nameList = []
-    this.searchParent(this.nodes,d.code)
-    this.addContainer(this.nodes,d.code,this.TYPE_BLOCK,nameList.length)
+    this.nameList = []
+    this.searchParent(this.nodes,d.code)    
+    this.addContainer(this.nodes,d.code,this.TYPE_BLOCK,this.nameList.length)
+  }
+
+  addNode(d){
+    this.nameList = []
+    this.searchParent(this.nodes,d.code)    
+    this.addContainer(this.nodes,d.code,this.TYPE_NODE,this.nameList.length)
   }
   
-          
+  async nodeDelete(d){
+    let res = await Swal({
+      title: '删除节点',
+      text: '确定要删除该节点吗',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '是的, 删除!',
+      cancelButtonText: '不，保留'
+    })
+    if (res.value == true){
+      let deleteNode=(node,id)=>{
+        if (node.children){
+         let deleteNodes = _.remove(node.children,(c)=>{
+            if(c['code'] != id){
+              deleteNode(c,id)
+            }
+            return c['code'] == id
+          })                   
+        }
+      }
+      deleteNode(this.nodes,d.code)
+      this.hasNode = false
+      this.nodes = _.cloneDeep(this.nodes)   
+    }
+  }
+
   searchParent(node, parentCode){
-    var i, nameList, rows, _len, _ref, _results;
+    var i, rows, _len, _ref, _results;
     if (node.code === parentCode) {
-      return nameList = Object.assign([],node.children);
+      return this.nameList = Object.assign([],node.children);
     } else if (node.children) {
       _ref = node.children;
       _results = [];
       for (i = 0, _len = _ref.length; i < _len; i++) {
         rows = _ref[i];
-        _results.push(rows.code === parentCode ? nameList = Object.assign([],rows.children) : this.searchParent(rows, parentCode));
+        _results.push(rows.code === parentCode ? this.nameList = Object.assign([],rows.children) : this.searchParent(rows, parentCode));
       }
       return _results;
     }
@@ -52,19 +91,19 @@ export class DataModuleComponent implements OnInit {
     var i, newContainer, rows, _len, _ref, _results;
     if (node.code === id) {
       newContainer = {
-        "-name": this.TYPE_BLOCK + name,
-        "code": Math.floor(Math.random() * (1000 - 0+1)) + 0,
+        "-name": '节点' + name,
+        "code": UUID.UUID(),
         "type": type,
         "children": [],
         "property": [],
         "file": []
       };
-      if (type === this.TYPE_BLOCK) {
+      if (type === this.TYPE_BLOCK) {  
         i = _.findLastIndex(node.children, (c) => {
           return c['type'] === this.TYPE_BLOCK;
-        });        
-        node.children.splice(i + 1, 0, newContainer);        
-        this.nodes = _.cloneDeep(this.nodes)        
+        });     
+        node.children.splice(i + 1, 0, newContainer);         
+        this.nodes = _.cloneDeep(this.nodes)    
         return;
       } else if (type === this.TYPE_FILE) {
         newContainer.property = _.cloneDeep(this.fileSysAttrLists);
@@ -79,9 +118,11 @@ export class DataModuleComponent implements OnInit {
         });
         if (i === -1) {
           node.children.push(newContainer);
+          this.nodes = _.cloneDeep(this.nodes)        
           return;
         }
         node.children.splice(i + 1, 0, newContainer);
+        this.nodes = _.cloneDeep(this.nodes)        
         return;
       }
     }

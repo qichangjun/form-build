@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DataModuleComponent } from './data-module.component';
-
+import { LoginComponent } from './login.component';
 
 
 const routes:Routes = [  
-  { path:'',component:DataModuleComponent}  
+  { path:'',component:LoginComponent}  
 ];
 
 @NgModule({
@@ -14,4 +13,4 @@ const routes:Routes = [
   ],
   exports:[RouterModule]
 })
-export class DataModuleRoutingModule { }
+export class LoginRoutingModule { }

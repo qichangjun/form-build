@@ -1,5 +1,6 @@
 import { Directive, ElementRef, AfterViewInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 declare var d3: any;
+import * as _ from 'lodash';
 @Directive({
     selector: '[collapsibleTree]'
 })
@@ -304,7 +305,7 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
 
     ngOnChanges() {
         if (this.nodes) {
-            this.root = Object.assign({}, this.nodes)
+            this.root = _.cloneDeep(this.nodes)
             this.root.x0 = this.w / 2 + 60
             this.root.y0 = 50
             this.update(this.root)
