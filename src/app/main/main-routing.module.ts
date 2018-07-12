@@ -5,9 +5,8 @@ import { AuthGuard } from '../core/guard/auth.guard';
 
 const routes:Routes = [  
   { path:'',component:MainComponent,children:[
-    { path:'',redirectTo:'projectManage',pathMatch:'prefix'},  
-    { path:'formBuild',loadChildren:'../form-build/form-build.module#FormBuildModule',canActivate:[AuthGuard]},
-    { path:'projectManage',loadChildren:'../project-manage/project-manage.module#ProjectManageModule',canActivate:[AuthGuard]},
+    { path:'',redirectTo:'project',pathMatch:'prefix'},      
+    { path:'project',loadChildren:'../project-manage/project-manage.module#ProjectManageModule',canActivate:[AuthGuard]},
     { path:'systemManage',loadChildren:'../system-manage/system-manage.module#SystemManageModule',canActivate:[AuthGuard]}
   ]}, 
 ];

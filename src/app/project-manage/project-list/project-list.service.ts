@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http,URLSearchParams } from '@angular/http';
-import { AuthenticationService } from '../core/services/auth.service';
-import { ConfigService } from '../core/services/config.service';
-import { ApiUrlService } from '../core/services/api.service';
-import { ResponseHandleService } from '../core/services/responseHandle.service';
+import { AuthenticationService } from '../../core/services/auth.service';
+import { ConfigService } from '../../core/services/config.service';
+import { ApiUrlService } from '../../core/services/api.service';
+import { ResponseHandleService } from '../../core/services/responseHandle.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectManageService {
+export class ProjectListManageService {
 
   constructor(
     private http : Http,

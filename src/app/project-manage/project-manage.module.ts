@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectManageComponent } from './project-manage.component';
 import { DataModuleComponent } from './data-module/data-module.component';
 import { ShareModule } from '../share/share.module';
 import { ProjectManageRoutingModule } from './project-manage-routing.module'
@@ -13,6 +12,9 @@ import { editCustomDataDialog } from './data-module/dialog/editCustomData/editCu
 import { updateNameDialog } from './data-module/dialog/updateName/updateName.dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
+import { ProjectListManageComponent } from './project-list/project-list.component';
+import { ProjectManageComponent } from './project-manage.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
     MatCardModule,
     ShareModule
   ],
-  declarations: [ProjectManageComponent,DataModuleComponent,addFileNameDialog,editFileDialog,editCustomDataDialog,updateNameDialog],
+  declarations: [ProjectManageComponent,ProjectListManageComponent,DataModuleComponent,addFileNameDialog,editFileDialog,editCustomDataDialog,updateNameDialog],
   entryComponents:[
     addFileNameDialog,
     editFileDialog,
