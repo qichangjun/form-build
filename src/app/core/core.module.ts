@@ -6,6 +6,8 @@ import { ConfigService } from './services/config.service';
 import { ApiUrlService } from './services/api.service';
 import { ResponseHandleService } from './services/responseHandle.service';
 import { AuthGuard } from './guard/auth.guard';
+import { EventService } from './services/event.service';
+import { UtilService } from './services/util.service';
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ export class CoreModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: CoreModule,
-      providers: [AuthenticationService,ConfigService,ApiUrlService,ResponseHandleService,AuthGuard]
+      providers: [AuthenticationService,ConfigService,ApiUrlService,
+        ResponseHandleService,AuthGuard,EventService,UtilService]
     };
   }
 }

@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { addFileNameDialog } from './dialog/addFileName/addFileName.dialog';
 import { UUID } from 'angular2-uuid';
+import * as _ from 'lodash';
 import Swal from 'sweetalert2'
+import { EventService } from '../../core/services/event.service';
+import { editFileDialog } from './dialog/editFile/editFile.dialog';
+import { editCustomDataDialog } from './dialog/editCustomData/editCustomData.dialog';
+import { updateNameDialog } from './dialog/updateName/updateName.dialog';
+
 declare var XML: any;
 @Component({
   selector: 'app-data-module',
@@ -25,7 +32,13 @@ export class DataModuleComponent implements OnInit {
   TYPE_NODE = 'node'
   hasNode : boolean = false;
   nameList = []
-  constructor() { }
+  keepContainer = undefined
+  editAble = true
+  slidSize = 10;
+  constructor(
+    public dialog: MatDialog,
+    private _eventService : EventService
+  ) { }
 
   ngOnInit() {
   }
@@ -45,7 +58,41 @@ export class DataModuleComponent implements OnInit {
     this.searchParent(this.nodes,d.code)    
     this.addContainer(this.nodes,d.code,this.TYPE_NODE,this.nameList.length)
   }
+
+  addFile(d){
+    const dialogRef = this.dialog.open(addFileNameDialog);
+    dialogRef.afterClosed().subscribe(res => {
+      if(!res){
+        return
+      }
+      this.searchContainer(this.nodes,d.code)
+      this.keepContainer.file.push({
+        '-type' : res,
+        'property' : _.cloneDeep(this.fileSysAttrLists)
+      })
+      d.file.push({
+        '-type' : res,
+        'property' : _.cloneDeep(this.fileSysAttrLists)
+      })
+      this._eventService.toggleEvent({ type: 'updateNodes', value: d })
+      this.editFile(d)
+    });
+  }
   
+  editFile(d){
+    const dialogRef = this.dialog.open(editFileDialog,{
+      data:{fileLists:d.file}
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if(res){
+        d.file = res 
+        this.searchContainer(this.nodes,d.code)
+        this.keepContainer.file = res 
+        this._eventService.toggleEvent({ type: 'updateNodes', value: d })
+      }      
+    })    
+  }
+
   async nodeDelete(d){
     let res = await Swal({
       title: '删除节点',
@@ -58,7 +105,7 @@ export class DataModuleComponent implements OnInit {
     if (res.value == true){
       let deleteNode=(node,id)=>{
         if (node.children){
-         let deleteNodes = _.remove(node.children,(c)=>{
+          _.remove(node.children,(c)=>{
             if(c['code'] != id){
               deleteNode(c,id)
             }
@@ -69,6 +116,41 @@ export class DataModuleComponent implements OnInit {
       deleteNode(this.nodes,d.code)
       this.hasNode = false
       this.nodes = _.cloneDeep(this.nodes)   
+      let checkHasNode=(node)=>{
+        if (node['type'] == 'node'){
+          this.hasNode = true;
+          return 
+        }
+        if (node.children){
+          node.children.map((c)=>{
+            if(c['type'] == 'node'){
+              this.hasNode = true;
+              return 
+            }else{
+              checkHasNode(c)
+            }
+          })
+        }
+      }
+      checkHasNode(this.nodes)
+      if(!this.hasNode){
+        let updateParentNode=(node,code)=>{
+          if (node.code == code){
+            node.hasNode = false;
+            return
+          }
+          if (node.children){
+            node.children.map((c)=>{
+              if(c['code'] == code){
+                c['hasNode'] = false
+              }else{
+                updateParentNode(c,code)
+              }
+            })
+          }
+        }
+        updateParentNode(this.nodes,d.parent.code)
+      }
     }
   }
 
@@ -86,6 +168,15 @@ export class DataModuleComponent implements OnInit {
       return _results;
     }
   };
+
+  searchContainer(container,code){
+    if (container.code == code){
+      this.keepContainer = container
+    }
+    container.children.forEach(c => {
+      this.searchContainer(c,code)
+    });
+  }
 
   addContainer (node, id, type, name) {
     var i, newContainer, rows, _len, _ref, _results;
@@ -136,4 +227,65 @@ export class DataModuleComponent implements OnInit {
       return _results;
     }
   };
+
+  addCustomData(d){
+    let noSysattrRules = d.property.filter((c)=>c['-sys'] == 'false')
+    let sysattrRules = d.property.filter((c)=>c['-sys'] == 'true')
+    const dialogRef = this.dialog.open(editCustomDataDialog,{
+      data:{
+        noSysattrRules : noSysattrRules,
+        sysattrRules : sysattrRules,    
+        containerId : d.code,         
+        containerType : d['type']
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if(!res){
+        d.property = _.concat(noSysattrRules,sysattrRules)
+        return 
+      }
+      this.searchContainer(this.nodes,d.code)
+      d.property = _.concat(res.sysattrRules,res.noSysattrRules)
+      this.keepContainer.property = _.concat(res.sysattrRules,res.noSysattrRules)
+      return 
+    });
+    
+  }
+
+  updateName(d){
+    this.nameList = []
+    this.searchParent(this.nodes,d.parent.code)
+    let brothersName = _.map(this.nameList,'-name')
+    const dialogRef = this.dialog.open(updateNameDialog,{
+      data:{
+        name : d['-name'],
+        brothersName : brothersName,
+        canRepeat : d['-can_repeat'],
+        type : d.type,
+        required : d['-required']
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if(!res){
+        alert('名称不能为空')
+        return
+      }
+      d['-can_repeat'] = res.canRepeat
+      d['-required'] = res.required
+      let updateNameFn = (node,id,canRepeat,name,required)=>{
+        if (node.code == id){
+          node['-name'] = name
+          node['-can_repeat'] = canRepeat
+          node['-required'] = required
+          this._eventService.toggleEvent({ type: 'updateName', value: {id,name}})
+          return 
+        }else if (node.children){
+          node.children.forEach(c=>{
+            updateNameFn(c,id,canRepeat,name,required)
+          })
+        }
+      }
+      updateNameFn(this.nodes,d.code,res.canRepeat,res.name,res.required)      
+    });
+  }
 }

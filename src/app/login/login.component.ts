@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
   }
 
   async login(){
-    // let res = await this._loginService.login(this.model)
-    this._authenticationService.setCurrentUser({a:1111})
+    let res = await this._loginService.login(this.model)
+    this._authenticationService.setCurrentUser(res)
     this.router.navigate(['/main'])
   }
 }

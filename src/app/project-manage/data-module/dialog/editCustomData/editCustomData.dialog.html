@@ -1,0 +1,112 @@
+<h2 mat-dialog-title>属性</h2>
+<mat-dialog-content>
+    <div>
+        <img class="modal--head--icon" src="images/edit--file--data--modal--head--icon.png" alt="" />
+        <span flex></span>
+    </div>
+    <div class="md-dialog-content edit--custom--data--modal--content">
+        <div >
+            <div class="attribute--row--box">
+                <div class="attribute--row--box__header">默认数据项</div>
+                <table class="table attribute--row--box__table">
+                    <thead>
+                        <tr class="table__th--tr">
+                            <th>序号</th>
+                            <th>中文名</th>
+                            <th>属性名</th>
+                            <th>类型</th>
+                            <th width="60">长度</th>
+                            <th width="71">必填</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of systemAttrs;let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{data['-title']}}</td>
+                            <!--<td>{{data.attrNameEn}}</td>-->
+                            <td>{{data['-name']}}</td>
+                            <td>
+                                {{data['-type']=='string'?'字符型':data['-type']=='int'?'数字型':data['-type']=='boolean'?'布尔型':data['-type']=='long'?'长整型':'日期型'}}
+                            </td>
+                            <td>{{data['-maxLength']}}</td>
+                            <td>
+                                {{data['-nullAble']=='false'?'是':'否'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="attribute--row--box">
+                <div class="attribute--row--box__header">自定义元数据</div>
+                <span class="attr--drag--sort--prompt">(属性可拖拽排序)</span>
+                <table class="table attribute--row--box__table">
+                    <thead>
+                        <tr class="table__th--tr">
+                            <th></th>
+                            <th></th>
+                            <th>中文名</th>
+                            <th>属性名</th>
+                            <th>类型</th>
+                            <th width="60">长度</th>
+                            <th width="60">必填</th>
+                        </tr>
+                    </thead>
+                    <tbody class="input--data--tbody">
+                        <tr *ngFor="let customData of entity;let i = index">
+                            <td>
+                                <button type="button" class="btn btn-default" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-align-center" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                            <td class="add--attribute--btn--td">
+                                <button class="fa fa-minus delete--attribute--btn" (click)="deleteCustomdata(i)"></button>
+                            </td>
+                            <td>
+                                <div class="md-block edit--custom--data--modal__input--box">
+                                    <input class="form-control edit--custom--data--modal__input" [(ngModel)]="customData['-title']">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-block edit--custom--data--modal__input--box">
+                                    <input class="form-control edit--custom--data--modal__input" [(ngModel)]="customData['-name']">
+                                </div>
+                            </td>
+                            <td>
+                                <mat-select class="edit--custom--data--modal__select" [(ngModel)]="customData['-type']">
+                                    <mat-option *ngFor="let type of typeLists" value="{{type.value}}">
+                                        {{type.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                            <td>
+                                <div class="md-block edit--custom--data--modal__input--box" *ngIf="customData['-type'] == 'string'">
+                                    <input class="form-control edit--custom--data--modal__input" [(ngModel)]="customData['-maxLength']">
+                                </div>
+                            </td>
+                            <td>
+                                <mat-select [(ngModel)]="customData['-nullAble']" class="edit--custom--data--modal__select">
+                                    <mat-option [value]="'false'">
+                                        是
+                                    </mat-option>
+                                    <mat-option [value]="'true'">
+                                        否
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                        </tr>
+                        <tr class="dndPlaceholder"></tr>
+                        <tr>
+                            <td class="add--attribute--btn--td">
+                                <button class="fa fa-plus add--attribute--btn" (click)="addCustomData()"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="save()">确定</button>
+    <button mat-button mat-dialog-close>取消</button>
+</mat-dialog-actions>

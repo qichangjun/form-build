@@ -5,21 +5,26 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ColorPickerDirective } from './directive/color-picker.directive';
 import { CollapsibleTreeDirective } from './directive/collapsibleTree.directive';
+import { NavBarComponent } from './component/navBar/navBar.component';
+import { TopSearchBarComponent } from './component/topSearchBar/topSearchBar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
     FormsModule,ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatToolbarModule
   ],
   exports:[
     CommonModule,
     HttpModule,
     FormsModule,ReactiveFormsModule,
     RouterModule,ColorPickerDirective,
-    CollapsibleTreeDirective
+    CollapsibleTreeDirective,NavBarComponent,
+    TopSearchBarComponent
   ],
-  declarations: [ColorPickerDirective,CollapsibleTreeDirective]
+  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent]
 })
 export class ShareModule { }

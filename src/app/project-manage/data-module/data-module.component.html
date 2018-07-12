@@ -1,3 +1,13 @@
+<mat-slider
+        style="position: absolute;"
+        class="example-margin"
+        [(ngModel)]="slidSize"
+        [step]="1"
+        [max]="15"
+        [min]="5"        
+        [vertical]="true">
+</mat-slider>
+
 <div collapsibleTree 
 (updateName)="updateName($event)"
 (addBlock)="addBlock($event)"
@@ -6,7 +16,9 @@
 (addFile)="addFile($event)"
 (editFile)="editFile($event)"
 (addCustomData)="addCustomData($event)"
-[nodes]="nodes" [editAble]="true"
+[nodes]="nodes" [editAble]="editAble"
+[hasNode]="hasNode"
+[slidSize]="slidSize/10"
 >
 
 </div>

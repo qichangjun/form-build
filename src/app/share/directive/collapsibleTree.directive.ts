@@ -1,6 +1,8 @@
-import { Directive, ElementRef, AfterViewInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Directive, ElementRef, AfterViewInit, Input, OnChanges, EventEmitter, Output, SimpleChange } from '@angular/core';
 declare var d3: any;
+declare var $: any;
 import * as _ from 'lodash';
+import { EventService } from '../../core/services/event.service';
 @Directive({
     selector: '[collapsibleTree]'
 })
@@ -23,8 +25,10 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
     nodeHeight = 75
     horizontalSeparationBetweenNodes = 60   //节点之间间隔的宽度,高度
     verticalSeparationBetweenNodes = 128
+    @Input() slidSize : number;
     @Input() nodes: any;
     @Input() editAble: boolean;
+    @Input() hasNode : boolean;
     @Output() updateName: EventEmitter<any> = new EventEmitter();
     @Output() addBlock: EventEmitter<any> = new EventEmitter();
     @Output() addNode: EventEmitter<any> = new EventEmitter();
@@ -33,12 +37,32 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
     @Output() editFile: EventEmitter<any> = new EventEmitter();
     @Output() addCustomData: EventEmitter<any> = new EventEmitter();
 
-    constructor(private el: ElementRef) {
+    constructor(
+        private _eventService : EventService,
+        private el: ElementRef) {
         this.initView()
     }
 
     ngAfterViewInit() {
-
+        this._eventService.toggleEvent$.subscribe(info=>{
+            if(info){
+                if(info.type == 'updateNodes'){
+                    this.clickContainer(info.value)
+                }else if (info.type == 'updateName'){
+                    setTimeout(()=>{
+                        let _name = info.value.name                        
+                        $('#' + 'text' + info.value.id ).text(()=>{
+                            return _name.length > 8 ? _name.substring(0,8) + '...' : _name
+                        }).attr('x', ()=>{
+                            if( _name.length > 8){
+                                _name =  _name.substring(0,8) + '...'
+                            }
+                            return '1em'
+                        })
+                    })
+                }
+            }            
+        })
     }
     initView() {
         this.tree = d3.layout.tree().nodeSize([this.nodeWidth + this.horizontalSeparationBetweenNodes, this.nodeHeight + this.verticalSeparationBetweenNodes])
@@ -180,7 +204,6 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
         });
         return;
     }
-    
     clearSelected = function () {
         var i, rects, rows, _len;
         rects = this.el.nativeElement.querySelectorAll('rect');
@@ -200,14 +223,14 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
         if (info.type == 'record') {
             return
         }
-        editContainer.append('svg:text').attr('x', 98).attr('y', -4).text('\uf044').attr("font-family", "FontAwesome").attr('class', 'icon-size').on('click', function (d) {
+        editContainer.append('svg:text').attr('x', 98).attr('y', -4).text('\uf044').attr("font-family", "FontAwesome").attr('class', 'icon-size').on('click',  (d)=> {            
             setTimeout(() => {
-                if (info.type !== 'record' && this.editAble) {
+                if (info.type !== 'record' && this.editAble) {                    
                     this.updateName.emit(self);
                 }
             });
         });
-        editContainer.append('svg:text').attr('x', 120).attr('y', -6).attr('text-anchor', 'start').attr('class', 'cursor-pointer').text('修改名称').on('click', function (d) {
+        editContainer.append('svg:text').attr('x', 120).attr('y', -6).attr('text-anchor', 'start').attr('class', 'cursor-pointer').text('修改名称').on('click',  (d)=> {
             setTimeout(() => {
                 if (info.type !== 'record' && this.editAble) {
                     this.updateName.emit(self);
@@ -302,13 +325,23 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
             return this.append_addNodeButton(toolContainer, d);
         }
     };
-
-    ngOnChanges() {
-        if (this.nodes) {
-            this.root = _.cloneDeep(this.nodes)
-            this.root.x0 = this.w / 2 + 60
-            this.root.y0 = 50
-            this.update(this.root)
+    ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+        if (changes['nodes']){
+            if (this.nodes) {
+                this.root = _.cloneDeep(this.nodes)
+                this.root.x0 = this.w / 2 + 60
+                this.root.y0 = 50
+                this.update(this.root)
+            }
+        }
+        if (changes['slidSize']){  
+            console.log(this.slidSize)          
+            this.size = this.slidSize
+            d3.select('#mySvgg').attr("transform",
+            
+            "scale(" + this.size + ")")
+            // this.el.nativeElement.querySelector('#mySvg').setAttribute('width',(this.newWidth + 400)*this.size)
+            // this.el.nativeElement.querySelector('#mySvg').setAttribute('height',(200 + (this.maxDepth+1)*200)*this.size)
         }
     }
 }

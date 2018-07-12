@@ -8,6 +8,7 @@ const routes:Routes = [
     { path:'',redirectTo:'projectManage',pathMatch:'prefix'},  
     { path:'formBuild',loadChildren:'../form-build/form-build.module#FormBuildModule',canActivate:[AuthGuard]},
     { path:'projectManage',loadChildren:'../project-manage/project-manage.module#ProjectManageModule',canActivate:[AuthGuard]},
+    { path:'systemManage',loadChildren:'../system-manage/system-manage.module#SystemManageModule',canActivate:[AuthGuard]}
   ]}, 
 ];
 

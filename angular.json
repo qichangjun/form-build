@@ -38,6 +38,7 @@
             "scripts": [
               "node_modules/js-cookie/src/js.cookie.js",
               "node_modules/dragula/dist/dragula.js",
+              "node_modules/jquery/dist/jquery.js",
               "src/assets/js/d3.min.js",
               "src/assets/js/XML-Util/ObjTree.js",
               "src/assets/js/XML-Util/jkl-dumper.js"

@@ -7,7 +7,7 @@ import { ProjectManageComponent } from './project-manage.component';
 
 const routes:Routes = [  
   { path:'',component:ProjectManageComponent},
-  { path:'dataModule',component:DataModuleComponent}    
+  { path:'dataModule',component:DataModuleComponent}      
 ];
 
 @NgModule({
