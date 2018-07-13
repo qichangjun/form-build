@@ -7,5 +7,16 @@ export class ApiUrlService {
   getDataBaseList = "/project/database/list";
   newProject = "/project/create";
   deleteProject = "/project/remove";
-  getUserLists = "/receive_log/list"
+  getUserLists = "/receive_log/list";
+  getProjectInfo = "/project/detail";
+  updateProject = "/project/update";
+
+  getSysAttr = "/project/template/system_attribute/list";
+  getModuleVersionList = "/project/template/version/list";
+  getModuleInfo = "/project/template/detail";
+  createModule = "/project/template/create";
+  updateVersion = "/project/template/upgrade";
+  editModule = "/project/template/update";
+  exportSample = "/project/template/sample"
+  exportModule = "/project/template/download"
 }

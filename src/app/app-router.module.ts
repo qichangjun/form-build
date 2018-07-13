@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guard/auth.guard';
 
 const routes:Routes = [
-  { path:'',redirectTo:'login',pathMatch:'prefix'},  
+  { path:'',redirectTo:'main',pathMatch:'prefix'},  
   { path:'main',loadChildren:'./main/main.module#MainModule'},
   { path:'login',loadChildren:'./login/login.module#LoginModule'},
   { path:'404',loadChildren:'./404/notFound.module#NotFoundModule'},

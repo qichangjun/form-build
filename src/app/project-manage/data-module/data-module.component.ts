@@ -8,16 +8,20 @@ import { EventService } from '../../core/services/event.service';
 import { editFileDialog } from './dialog/editFile/editFile.dialog';
 import { editCustomDataDialog } from './dialog/editCustomData/editCustomData.dialog';
 import { updateNameDialog } from './dialog/updateName/updateName.dialog';
-
+import { DataModuleService } from './data-module.service';
+import { ProjectEditService } from '../project-edit/project-edit.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UtilService } from '../../core/services/util.service';
 declare var XML: any;
 @Component({
   selector: 'app-data-module',
   templateUrl: './data-module.component.html',
-  styleUrls: ['./data-module.component.css']
+  styleUrls: ['./data-module.component.css'],
+  providers:[DataModuleService]
 })
 export class DataModuleComponent implements OnInit {
-  nodes =  {
-    "-name": '12',
+  nodes : any =  {
+    "-name": '',
     "code" : UUID.UUID(),
     "type" : "record",
     "children": [],
@@ -26,26 +30,244 @@ export class DataModuleComponent implements OnInit {
     "changeType":1
   }
   fileSysAttrLists = []
+  recordSysAttrLists = []
   nodeSysAttrLists = []
   TYPE_BLOCK = 'block'
   TYPE_FILE = 'file'
   TYPE_NODE = 'node'
+  TYPE_RECORD = 'record'
   hasNode : boolean = false;
   nameList = []
   keepContainer = undefined
   editAble = true
   slidSize = 10;
+  xotree = new XML.ObjTree();
+
+  module : any = undefined;
+  projectInfo : any = {};
+  versionList : Array<any>=[];
+  currentVesion = undefined;
+  routerSubscription : any;
+  updateAble : boolean = false;
+  moduleEditAble : boolean = true;
+  parameter = {
+    objectId : undefined,
+    create : undefined
+  }
+  loading : boolean = false;
   constructor(
     public dialog: MatDialog,
-    private _eventService : EventService
-  ) { }
+    private _eventService : EventService,
+    private _dataModuleService : DataModuleService,
+    private _projectEditService : ProjectEditService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _utilService : UtilService
+  ) { 
+    this.routerSubscription = this.route.queryParams.subscribe((data: any) => {
+      this.parameter = Object.assign(this.parameter, data)
+      this.getSysAttr()
+    })
+  }
 
   ngOnInit() {
   }
 
   async getSysAttr(){
-    
+    this.loading = true
+    let nodeAttr = await this._dataModuleService.getSysAttr(this.TYPE_NODE)
+    this.nodeSysAttrLists = []
+    nodeAttr.forEach((c)=>{
+      this.nodeSysAttrLists.push({
+        '-sys' : 'true',
+        '-title' : c.title,
+        '-type' : c.attrType,
+        '-name' : c.attrName,
+        '-maxLength' : c.attrLength,
+        '-nullAble' : c.nullAble
+      })
+    })
+    let recordAttr = await this._dataModuleService.getSysAttr(this.TYPE_RECORD)
+    this.recordSysAttrLists = []
+    recordAttr.forEach((c)=>{
+      this.nodeSysAttrLists.push({
+        '-sys' : 'true',
+        '-title' : c.title,
+        '-type' : c.attrType,
+        '-name' : c.attrName,
+        '-maxLength' : c.attrLength,
+        '-nullAble' : c.nullAble
+      })
+    })
+    this.getProjectInfo()
+    let fileAttr = await this._dataModuleService.getSysAttr(this.TYPE_FILE)
+    this.fileSysAttrLists = []
+    fileAttr.forEach(c => {
+      this.fileSysAttrLists.push({
+        '-sys' : 'true',
+        '-title' : c.title,
+        '-type' : c.attrType,
+        '-name' : c.attrName,
+        '-maxLength' : c.attrLength,
+        '-nullAble' : c.nullAble
+      })
+    });
+    this.getVersionList()
   }
+
+  async getProjectInfo(){    
+    this.projectInfo = await this._projectEditService.getProjectInfo(this.parameter.objectId)
+  }
+
+  async getVersionList(){
+    let res = await this._dataModuleService.getModuleVersionList(this.parameter.objectId)
+    this.versionList = res 
+    if(this.versionList.length == 0){
+      this.updateAble = false
+      this.nodes = {
+        "-name": this.projectInfo.projectName,
+        "code" : UUID.UUID(),
+        "type" : "record",
+        "children": [],
+        "property":_.cloneDeep(this.recordSysAttrLists),
+        "file":[]
+      }
+      this.module = {
+        businessCode :  this.projectInfo.businessCode,
+        creator : this.projectInfo.creator,
+        projectId : this.projectInfo.id,
+        versionNo : 1
+      }
+      if (this.parameter.create){
+        this.versionList.push({versionNo:1.0})
+        this.currentVesion = 1.0
+      }
+      this.loading = false 
+      return 
+    }
+    this.updateAble = true 
+    this.currentVesion = this.versionList[this.versionList.length - 1].id
+    this.getModuleInfo()
+  }
+
+  async getModuleInfo(){
+    this.loading = true
+    let res = await this._dataModuleService.getModuleInfo(this.currentVesion)
+    if(this.currentVesion != this.versionList[this.versionList.length - 1].id){
+      this.moduleEditAble = false
+    }else{
+      this.moduleEditAble = true 
+    }
+    this.module = res.template 
+    this.nodes = _.cloneDeep(this.xotree.parseXML(this.module.templateXml).record)
+    this.nodes['type'] = 'record'  
+    this.formatJson(this.nodes)
+    this.loading = false 
+  }
+
+  formatJson = (container)=>{
+    container['code'] = UUID.UUID(),  
+    container['file'] = this._utilService.formatModuleArray(container['file'])
+    container['property'] = this._utilService.formatModuleArray(container['property'])
+    let type = [this.TYPE_BLOCK,this.TYPE_NODE]
+    type.forEach((containerType)=>{
+      container[containerType] = this._utilService.formatModuleArray(container[containerType])
+      container[containerType] = container[containerType] || []
+      if (containerType == this.TYPE_NODE && container[containerType].length > 0){
+        container.hasNode = true
+        this.hasNode = true 
+      }
+      container[containerType].forEach((c)=>{
+        c['type'] = containerType
+      })
+    })      
+    container.children = _.concat(container.block,container.node)
+    container.children.forEach((c)=>{
+      this.formatJson(c)
+    })
+    type.forEach((containerType)=>{
+      delete(container[containerType])
+    })      
+  }
+
+  createModule(){
+    this.versionList.push({versionNo:1.0});
+    this.currentVesion='1.0'
+  }
+
+  async editProject(){
+    let saveMode = _.cloneDeep(this.nodes)
+    let formatServiceData = (container)=>{
+      container.block = []
+      container.node = []
+      if (container.type == 'block'){
+        container['-can_repeat'] = container['-can_repeat'] || false
+        container['-required'] = container['-required'] || false       
+      }else if (container.type == 'node'){
+        container['-required'] = container['-required'] || false       
+      }
+      container.file.forEach((c)=>{
+        c['-required'] = c['-required'] || false
+      })
+      container.children.forEach(c=>{
+        formatServiceData(c)
+        if(c.type == 'block') container.block.push(c)
+        if(c.type == 'node') container.node.push(c)
+        delete(c.children)
+        delete(c.type)
+        delete(c.code)
+        delete(c.hasNode)
+      })
+    }
+    formatServiceData(saveMode)
+   
+    delete(saveMode.children)
+    delete(saveMode.type)
+    delete(saveMode.code)
+    delete(saveMode.hasNode)
+    let xmlData = this.xotree.writeXML({record:saveMode})
+    this.module.templateXml = xmlData
+    if (!this.updateAble){
+      await this._dataModuleService.createModule(this.module)
+      this.unupdateAbleAlert()
+    }else{
+      this.unupdateAbleAlert()
+    }
+  }
+
+  async unupdateAbleAlert(){
+    let res = await Swal({
+      title:'确定升级吗?',
+      text:"数据模板修改之后需要升级",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#40B98E",
+      confirmButtonText: '升级',
+      cancelButtonText: '不升级'
+    })
+    if (res){
+      await this._dataModuleService.updateVersion(this.module)
+      this.getVersionList()
+    }else{
+      await this._dataModuleService.editModule(this.module)
+      this.getVersionList()
+    }
+  }
+
+  async exportSample(){
+    this.loading = true
+    let res = await this._dataModuleService.exportSample(this.currentVesion)
+    this.loading = false 
+    window.location.href = res.downloadUrl;
+  }
+
+  async exportModule(){
+    this.loading = true
+    let res = await this._dataModuleService.exportModule(this.currentVesion)
+    this.loading = false 
+    window.location.href = res.downloadUrl;
+  }
+  //---------------------------------------------------------------------- 模版方法 ------------------------------------------------------------------------------------
 
   addBlock(d){
     this.nameList = []
@@ -267,17 +489,16 @@ export class DataModuleComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(res => {
       if(!res){
-        alert('名称不能为空')
         return
       }
       d['-can_repeat'] = res.canRepeat
       d['-required'] = res.required
       let updateNameFn = (node,id,canRepeat,name,required)=>{
         if (node.code == id){
-          node['-name'] = name
+          node['-name'] = name          
           node['-can_repeat'] = canRepeat
           node['-required'] = required
-          this._eventService.toggleEvent({ type: 'updateName', value: {id,name}})
+          this._eventService.toggleEvent({ type: 'updateName', value: {id,name,d}})
           return 
         }else if (node.children){
           node.children.forEach(c=>{
@@ -286,6 +507,7 @@ export class DataModuleComponent implements OnInit {
         }
       }
       updateNameFn(this.nodes,d.code,res.canRepeat,res.name,res.required)      
+      this.nodes = _.cloneDeep(this.nodes)
     });
   }
 }

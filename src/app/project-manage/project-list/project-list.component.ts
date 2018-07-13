@@ -27,10 +27,6 @@ export class ProjectListManageComponent implements OnInit {
     this.projectList = res;
   }
 
-  gotoEdit(item){
-    this._router.navigate(['main/projectManage/dataModule'],{queryParams:{objectId:item.id}})
-  }
-
   newProject(){
     const dialogRef = this.dialog.open(newProjectDialog);
     dialogRef.afterClosed().subscribe(res => {

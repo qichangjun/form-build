@@ -49,17 +49,16 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
                 if(info.type == 'updateNodes'){
                     this.clickContainer(info.value)
                 }else if (info.type == 'updateName'){
-                    setTimeout(()=>{
-                        let _name = info.value.name                        
-                        $('#' + 'text' + info.value.id ).text(()=>{
-                            return _name.length > 8 ? _name.substring(0,8) + '...' : _name
-                        }).attr('x', ()=>{
-                            if( _name.length > 8){
-                                _name =  _name.substring(0,8) + '...'
-                            }
-                            return '1em'
-                        })
-                    })
+                    let _name = info.value.name                    
+                    $('#' + 'text' + info.value.id ).text(()=>{
+                        return _name.length > 8 ? _name.substring(0,8) + '...' : _name
+                    }).attr('x', ()=>{
+                        if( _name.length > 8){
+                            _name =  _name.substring(0,8) + '...'
+                        }
+                        return '1em'
+                    })                    
+                    this.clickContainer(info.value.d)
                 }
             }            
         })
@@ -327,15 +326,14 @@ export class CollapsibleTreeDirective implements AfterViewInit, OnChanges {
     };
     ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
         if (changes['nodes']){
-            if (this.nodes) {
+            if (this.nodes) {                
                 this.root = _.cloneDeep(this.nodes)
                 this.root.x0 = this.w / 2 + 60
                 this.root.y0 = 50
                 this.update(this.root)
             }
         }
-        if (changes['slidSize']){  
-            console.log(this.slidSize)          
+        if (changes['slidSize']){        
             this.size = this.slidSize
             d3.select('#mySvgg').attr("transform",
             

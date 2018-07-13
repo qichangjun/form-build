@@ -17,6 +17,7 @@ import { ProjectManageComponent } from './project-manage.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { newProjectDialog } from './project-list/dialog/newProject/newProject.dialog';
+import { ProjectEditComponent } from './project-edit/project-edit.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import { newProjectDialog } from './project-list/dialog/newProject/newProject.di
     MatInputModule,
     ShareModule
   ],
-  declarations: [ProjectManageComponent,ProjectListManageComponent,DataModuleComponent,addFileNameDialog,editFileDialog,editCustomDataDialog,updateNameDialog,newProjectDialog],
+  declarations: [ProjectManageComponent,ProjectListManageComponent,DataModuleComponent,addFileNameDialog,editFileDialog,editCustomDataDialog,updateNameDialog,newProjectDialog, ProjectEditComponent],
   entryComponents:[
     newProjectDialog,
     addFileNameDialog,

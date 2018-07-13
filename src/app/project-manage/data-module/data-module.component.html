@@ -1,24 +1,65 @@
-<mat-slider
-        style="position: absolute;"
-        class="example-margin"
-        [(ngModel)]="slidSize"
-        [step]="1"
-        [max]="15"
-        [min]="5"        
-        [vertical]="true">
-</mat-slider>
-
-<div collapsibleTree 
-(updateName)="updateName($event)"
-(addBlock)="addBlock($event)"
-(addNode)="addNode($event)"
-(nodeDelete)="nodeDelete($event)"
-(addFile)="addFile($event)"
-(editFile)="editFile($event)"
-(addCustomData)="addCustomData($event)"
-[nodes]="nodes" [editAble]="editAble"
-[hasNode]="hasNode"
-[slidSize]="slidSize/10"
->
-
+<div class="md-menu-toolbar edit--project--manage--head-box">
+        <div class="md-toolbar-tools">
+                <div class="md-icon-button edit--project--manage--head--btn">
+                        <a routerLink="../../projectList" class="fa fa-angle-left"></a>
+                </div>
+                <a routerLink="../../projectList" class="project--manage--head">系统接入</a>
+                <span class="fa fa-angle-right"></span>
+                <span class="current--column">{{projectInfo.projectName}}</span>
+                <span> | </span>
+                <span class="current--column">数据模板</span>
+        </div>
 </div>
+
+<div *ngIf="versionList.length == 0 && !this.loading" class="new--prompt--box--wrap">
+        <div class="new--prompt--box">
+                <div class="new--prompt--box__head">
+                        <img src="images/edit--project--manage--modal--new.png" alt="" />
+                        <span>还需要创建数据模板</span>
+                </div>
+                <div class="prompt-content">
+                        业务模板能够帮助您梳理业务流程，建立业务归档信息，并根据模板规则将业务信息填入到归档数据模型对应的位置上。
+                </div>
+        </div>
+        <div class="new--prompt__btn--box">
+                <img src="images/create--data--template--icon.png" alt="" />
+                <h4 class="title--content">该项目还没有定义数据模板</h4>
+                <button class="red--btn" (click)="createModule();">
+                        创建数据模板
+                </button>
+        </div>
+</div>
+
+<div *ngIf="versionList.length != 0">
+        <div class="save--template--box">
+                <div class="current--version">
+                        <span class="vertical-middle--inline-block" >版本号</span>
+                        <mat-select 
+                        class="current--version__select" 
+                        placeholder="1.0"
+                        [(ngModel)]="currentVesion"
+                        (selectionChange)="getModuleInfo()" >
+                                        <mat-option [value]="myversion.id" *ngFor="let myversion of versionList">{{myversion.versionNo}}</mat-option>                                       
+                        </mat-select>
+                </div>
+                <button class="green--btn" [disabled]="loading || !updateAble" (click)="exportSample($event)">
+                        导出样例
+                </button>
+                <button class="green--btn" [disabled]="loading || !updateAble" (click)="exportModule($event)">
+                        导出模版
+                </button>
+                <button *ngIf="moduleEditAble" class="green--btn" [disabled]="loading" (click)="editProject($event)" >
+                        保存模板
+                </button>
+        </div>
+        <mat-slider style="position: absolute;" class="example-margin" [(ngModel)]="slidSize" [step]="1" [max]="15" [min]="5" [vertical]="true">
+        </mat-slider>
+
+        <div collapsibleTree (updateName)="updateName($event)" (addBlock)="addBlock($event)" (addNode)="addNode($event)" (nodeDelete)="nodeDelete($event)"
+                (addFile)="addFile($event)" (editFile)="editFile($event)" (addCustomData)="addCustomData($event)" [nodes]="nodes"
+                [editAble]="editAble" [hasNode]="hasNode" [slidSize]="slidSize/10">
+
+        </div>
+</div>
+
+<loading-message *ngIf="loading"></loading-message>
