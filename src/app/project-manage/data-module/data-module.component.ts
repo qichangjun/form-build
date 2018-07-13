@@ -20,15 +20,7 @@ declare var XML: any;
   providers:[DataModuleService]
 })
 export class DataModuleComponent implements OnInit {
-  nodes : any =  {
-    "-name": '',
-    "code" : UUID.UUID(),
-    "type" : "record",
-    "children": [],
-    "property": [],
-    "file":[],
-    "changeType":1
-  }
+  nodes = undefined
   fileSysAttrLists = []
   recordSysAttrLists = []
   nodeSysAttrLists = []
@@ -151,6 +143,9 @@ export class DataModuleComponent implements OnInit {
   }
 
   async getModuleInfo(){
+    if (!this.currentVesion){
+      return 
+    }
     this.loading = true
     let res = await this._dataModuleService.getModuleInfo(this.currentVesion)
     if(this.currentVesion != this.versionList[this.versionList.length - 1].id){
