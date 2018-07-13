@@ -3,7 +3,16 @@
 @import 'node_modules/ng2-dnd/bundles/style.css';
 
 @import 'node_modules/font-awesome/css/font-awesome.min.css';
+@import '../node_modules/ag-grid/dist/styles/ag-theme-material.css';
+@import '../node_modules/ag-grid/dist/styles/ag-grid.css';
 
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+.ag-body-container{
+  width:100% !important;
+}
+.ag-header-row{
+  width: 100% !important;
+}
 .node rect{
     cursor:pointer;
     stroke:#8bd7c8;

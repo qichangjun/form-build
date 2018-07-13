@@ -14,6 +14,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 import { ProjectListManageComponent } from './project-list/project-list.component';
 import { ProjectManageComponent } from './project-manage.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { newProjectDialog } from './project-list/dialog/newProject/newProject.dialog';
 
 @NgModule({
   imports: [
@@ -24,10 +27,13 @@ import { ProjectManageComponent } from './project-manage.component';
     MatCheckboxModule,
     MatSliderModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
     ShareModule
   ],
-  declarations: [ProjectManageComponent,ProjectListManageComponent,DataModuleComponent,addFileNameDialog,editFileDialog,editCustomDataDialog,updateNameDialog],
+  declarations: [ProjectManageComponent,ProjectListManageComponent,DataModuleComponent,addFileNameDialog,editFileDialog,editCustomDataDialog,updateNameDialog,newProjectDialog],
   entryComponents:[
+    newProjectDialog,
     addFileNameDialog,
     editFileDialog,
     editCustomDataDialog,

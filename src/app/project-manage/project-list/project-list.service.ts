@@ -30,4 +30,47 @@ export class ProjectListManageService {
                       this._responseHandleService.handleError(error)
                     );
   }
+
+  getDataBaseList() : Promise<any> {
+    let params = new URLSearchParams();
+    params.set('accessToken',this._authenticationService.getCurrentUser().accessToken)
+    return this.http.get(this._configService.infoarchivesApiUrl() + this._apiUrlService['getDataBaseList'],{ search: params })
+                    .toPromise()
+                    .then(res =>
+                      this._responseHandleService.extractData(res)
+                    )
+                    .catch(error =>
+                      this._responseHandleService.handleError(error)
+                    );
+  }
+
+  newProject(info) : Promise<any> {
+    let params = new URLSearchParams();    
+    for( let key in info){
+      params.set(key,info[key])      
+    }
+    params.set('accessToken',this._authenticationService.getCurrentUser().accessToken)
+    return this.http.get(this._configService.infoarchivesApiUrl() + this._apiUrlService['newProject'],{ search: params })
+                    .toPromise()
+                    .then(res =>
+                      this._responseHandleService.extractDataSuccess(res)
+                    )
+                    .catch(error =>
+                      this._responseHandleService.handleError(error)
+                    );
+  }
+
+  deleteProject(objectId) : Promise<any> {
+    let params = new URLSearchParams();    
+    params.set('accessToken',this._authenticationService.getCurrentUser().accessToken)
+    params.set('id',objectId)
+    return this.http.get(this._configService.infoarchivesApiUrl() + this._apiUrlService['deleteProject'],{ search: params })
+                    .toPromise()
+                    .then(res =>
+                      this._responseHandleService.extractDataSuccess(res)
+                    )
+                    .catch(error =>
+                      this._responseHandleService.handleError(error)
+                    );
+  }
 }

@@ -1,0 +1,66 @@
+<form [formGroup]="myForm" (ngSubmit)="postDate()">
+    <h2 mat-dialog-title>文档模板</h2>
+    <mat-dialog-content>
+            <mat-form-field>
+                <div class="form-group">
+                    <label for="projectName">项目名称:</label>
+                    <input type="text"  matInput class="form-control" id="projectName" formControlName="projectName" />
+                    <mat-error *ngIf="myForm.controls.projectName.invalid && myForm.controls.projectName.dirty">用户名{{_formErrorMessageService.getErrorMessage(myForm.controls.projectName)}}</mat-error>
+                </div>
+            </mat-form-field>
+            <div>
+                <label for="businessCode">流水号</label>
+                <span> {{myForm.value.businessCode}}</span>
+            </div>
+
+            <mat-form-field>
+                    <div class="form-group">
+                        <label for="systemName">系统名称:</label>
+                        <input type="text"  matInput class="form-control" id="systemName" formControlName="systemName" />                        
+                    </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <label for="databaseName">数据库:</label>
+                <mat-select (selectionChange)="loadDataBaseVersion($event)"  id="databaseName" formControlName="databaseName" >
+                    <mat-option *ngFor="let dataBase of dataBaseDisplayLists" [value]="dataBase">
+                    {{dataBase}}
+                    </mat-option>
+                    <mat-option [value]="''">
+                        无
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="myForm.controls.databaseName.invalid && myForm.controls.databaseName.dirty">数据库{{_formErrorMessageService.getErrorMessage(myForm.controls.databaseName)}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                    <label for="databaseVersion">数据库版本:</label>
+                    <mat-select   id="databaseVersion" formControlName="databaseVersion" >
+                        <mat-option *ngFor="let databaseVersion of dataBaseVersions" [value]="databaseVersion">
+                        {{databaseVersion}}
+                        </mat-option>
+                        <mat-option [value]="''">
+                            无
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="myForm.controls.databaseVersion.invalid && myForm.controls.databaseVersion.dirty">数据库版本{{_formErrorMessageService.getErrorMessage(myForm.controls.databaseVersion)}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                        <label for="extractionMethod">数据抽取方式:</label>
+                        <mat-select  [disabled]="true" id="extractionMethod" formControlName="extractionMethod" >
+                            <mat-option [value]="'1'">
+                                    API接口
+                            </mat-option>
+                            <mat-option [value]="'0'">
+                                    ETL数据抽取
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="myForm.controls.extractionMethod.invalid && myForm.controls.extractionMethod.dirty">数据抽取方式{{_formErrorMessageService.getErrorMessage(myForm.controls.extractionMethod)}}</mat-error>
+                    </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button type="submit" [disabled]="!myForm.valid">确定</button>
+        <button mat-button type="button" mat-dialog-close>取消</button>
+    </mat-dialog-actions>
+</form>
+<loading-message *ngIf="loading"></loading-message>

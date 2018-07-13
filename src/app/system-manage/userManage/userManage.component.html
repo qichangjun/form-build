@@ -1,1 +1,10 @@
-userManage
+<ag-grid-angular #agGrid 
+                style="width: 100%; height: 500px;" class="ag-theme-material"
+                enableColResize
+                enableSorting
+                rowHeight="52"
+                rowSelection="multiple"                        
+                [gridOptions]="gridOptions">
+        </ag-grid-angular>
+
+<ngb-pagination (pageChange)="changePage($event)" [maxSize]="5" [pageSize]="50" [collectionSize]="totalElement" [(page)]="parameter.currentPage"  [rotate]="true" [boundaryLinks]="false"></ngb-pagination>

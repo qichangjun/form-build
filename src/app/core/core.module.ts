@@ -8,11 +8,14 @@ import { ResponseHandleService } from './services/responseHandle.service';
 import { AuthGuard } from './guard/auth.guard';
 import { EventService } from './services/event.service';
 import { UtilService } from './services/util.service';
+import { FormErrorMessageService } from './services/formErrorMessage.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   declarations: []
 })
@@ -21,7 +24,7 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [AuthenticationService,ConfigService,ApiUrlService,
-        ResponseHandleService,AuthGuard,EventService,UtilService]
+        ResponseHandleService,AuthGuard,EventService,UtilService,FormErrorMessageService]
     };
   }
 }

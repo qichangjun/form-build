@@ -8,13 +8,15 @@ import { CollapsibleTreeDirective } from './directive/collapsibleTree.directive'
 import { NavBarComponent } from './component/navBar/navBar.component';
 import { TopSearchBarComponent } from './component/topSearchBar/topSearchBar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { LoadingMessageComponent } from './component/loadingMessage/loadingMessage.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
     FormsModule,ReactiveFormsModule,
     RouterModule,
+    MatProgressSpinnerModule,
     MatToolbarModule
   ],
   exports:[
@@ -23,8 +25,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     FormsModule,ReactiveFormsModule,
     RouterModule,ColorPickerDirective,
     CollapsibleTreeDirective,NavBarComponent,
-    TopSearchBarComponent
+    TopSearchBarComponent,LoadingMessageComponent
   ],
-  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent]
+  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent,LoadingMessageComponent]
 })
 export class ShareModule { }

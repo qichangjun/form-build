@@ -35,8 +35,9 @@
         <div class="item--create--date">{{item.createDate  | date:'yyyy-MM-dd'}} <span translate="MODULES_PROJECTMANAGE_CREATE">创建</span></div>
         <div class="card--actions--pull--right">
             <div class="icon--button project-icon-tool" aria-label="More">
-                <span class="glyphicon glyphicon-trash" ng-click="deleteProject($event,item,i)"></span>
+                <span class="glyphicon glyphicon-trash" (click)="deleteProject($event,item,i)">删除</span>
             </div>
         </div>
     </mat-card-actions>
   </mat-card>
+  <loading-message *ngIf="loading"></loading-message>
