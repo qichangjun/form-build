@@ -10,4 +10,7 @@ export class ConfigService {
   adminApiUrl(){
     return environment.adminApiUrl;
   }
+  ermsApiUrl(){
+    return environment.ermsApiUrl;
+  }
 }

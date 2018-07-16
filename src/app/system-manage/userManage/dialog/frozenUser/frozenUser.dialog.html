@@ -1,0 +1,24 @@
+<h2 mat-dialog-title *ngIf="data.type == 'freezeUser'">冻结用户</h2>
+<h2 mat-dialog-title *ngIf="data.type == 'activeUser'">启用用户</h2>
+<mat-dialog-content>
+    <div class="new--category-wrapper">
+        <div class="input-content-wrapper">
+            <div class="input-boxs ">
+                <span class="prompt--content" *ngIf="data.type == 'freezeUser'"><span >冻结用户</span> {{data.row.name}} <span >将会使其无法登陆，确定要执行该操作吗</span>?</span>
+                <span *ngIf="data.type == 'activeUser'"><span >确定要启用用户</span> {{data.row.name}} ？</span>
+            </div>
+        </div>
+        <div class="input-content-wrapper">
+                <div *ngIf="data.type == 'freezeUser'" class="input-boxs">
+                    <span class="title">
+                        <span >冻结原因</span>：
+                    </span>
+                    <textarea class="form-control do--position-parent" rows="3" [(ngModel)]="data.row.lockReason"></textarea>
+                </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="freezeUser()">确定</button>
+    <button mat-button mat-dialog-close>取消</button>    
+</mat-dialog-actions>

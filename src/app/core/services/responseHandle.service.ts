@@ -35,7 +35,7 @@ export class ResponseHandleService {
   }
 
   public extractDataSuccess(res: Response) {      
-    let body = res.json();    
+    let body = res.json();     
     if (body.code == 1){      
       this.snackBar.open(body.message,'关闭', {
         duration: 2000,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
+import { HttpModule,JsonpModule } from '@angular/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ColorPickerDirective } from './directive/color-picker.directive';
@@ -10,10 +10,12 @@ import { TopSearchBarComponent } from './component/topSearchBar/topSearchBar.com
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoadingMessageComponent } from './component/loadingMessage/loadingMessage.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Sizefilter } from './pipe/size.pipe';
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
+    JsonpModule,
     FormsModule,ReactiveFormsModule,
     RouterModule,
     MatProgressSpinnerModule,
@@ -22,11 +24,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   exports:[
     CommonModule,
     HttpModule,
+    JsonpModule,
     FormsModule,ReactiveFormsModule,
     RouterModule,ColorPickerDirective,
     CollapsibleTreeDirective,NavBarComponent,
-    TopSearchBarComponent,LoadingMessageComponent
+    TopSearchBarComponent,LoadingMessageComponent,
+    Sizefilter
   ],
-  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent,LoadingMessageComponent]
+  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent,LoadingMessageComponent,Sizefilter]
 })
 export class ShareModule { }
