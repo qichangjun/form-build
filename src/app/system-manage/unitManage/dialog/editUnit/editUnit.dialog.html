@@ -1,0 +1,102 @@
+<form [formGroup]="myForm" (ngSubmit)="postDate()">
+    <h2 mat-dialog-title>修改单位信息</h2>
+    <mat-dialog-content>
+        <mat-form-field>
+            <label for="cooperativeGroup">角色:</label>
+            <mat-select id="cooperativeGroup" formControlName="cooperativeGroup">
+                <mat-option *ngFor="let cooperativeGroup of cooperativeGroupLists" [value]="cooperativeGroup">
+                    {{cooperativeGroup}}
+                </mat-option>
+                <mat-option [value]="''">
+                    无
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.cooperativeGroup.invalid && myForm.controls.cooperativeGroup.dirty">协作组{{_formErrorMessageService.getErrorMessage(myForm.controls.cooperativeGroup)}}</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitCode">机构代码:</label>
+                <input  type="text" matInput class="form-control" id="unitCode" formControlName="unitCode" />
+                <mat-error *ngIf="myForm.controls.unitCode.invalid && myForm.controls.unitCode.dirty">用户名{{_formErrorMessageService.getErrorMessage(myForm.controls.unitCode)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitDisplayName">单位名称:</label>
+                <input  type="text" matInput class="form-control" id="unitDisplayName" formControlName="unitDisplayName"
+                />
+                <mat-error *ngIf="myForm.controls.unitDisplayName.invalid && myForm.controls.unitDisplayName.dirty">单位名称{{_formErrorMessageService.getErrorMessage(myForm.controls.unitDisplayName)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitDisplayName">全宗号:</label>
+                <input [disabled]="true" type="text" matInput class="form-control" id="fonds" formControlName="fonds" />
+                <mat-error *ngIf="myForm.controls.fonds.invalid && myForm.controls.fonds.dirty">全宗号{{_formErrorMessageService.getErrorMessage(myForm.controls.fonds)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitDisplayName">单位负责人:</label>
+                <input  type="text" matInput class="form-control" id="unitOfficer" formControlName="unitOfficer" />
+                <mat-error *ngIf="myForm.controls.unitOfficer.invalid && myForm.controls.unitOfficer.dirty">单位负责人{{_formErrorMessageService.getErrorMessage(myForm.controls.unitOfficer)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <label for="unitStyle">单位类型:</label>
+            <mat-select id="unitStyle" formControlName="unitStyle">
+                <mat-option *ngFor="let unitStyle of unitStyleLists" [value]="unitStyle.value">
+                    {{unitStyle.displayName}}
+                </mat-option>
+                <mat-option [value]="''">
+                    无
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.unitStyle.invalid && myForm.controls.unitStyle.dirty">单位类型{{_formErrorMessageService.getErrorMessage(myForm.controls.unitStyle)}}</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitDisplayName">单位地址:</label>
+                <input  type="text" matInput class="form-control" id="unitAddress" formControlName="unitAddress" />
+                <mat-error *ngIf="myForm.controls.unitAddress.invalid && myForm.controls.unitAddress.dirty">单位地址{{_formErrorMessageService.getErrorMessage(myForm.controls.unitAddress)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitTel">联系电话:</label>
+                <input  type="text" matInput class="form-control" id="unitTel" formControlName="unitTel" />
+                <mat-error *ngIf="myForm.controls.unitTel.invalid && myForm.controls.unitTel.dirty">联系电话{{_formErrorMessageService.getErrorMessage(myForm.controls.unitTel)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="unitEmail">电子邮件:</label>
+                <input  type="text" matInput class="form-control" id="unitEmail" formControlName="unitEmail" />
+                <mat-error *ngIf="myForm.controls.unitEmail.invalid && myForm.controls.unitEmail.dirty">电子邮件{{_formErrorMessageService.getErrorMessage(myForm.controls.unitEmail)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="postcode">邮政编码:</label>
+                <input type="text" matInput class="form-control" id="postcode" formControlName="postcode" />
+                <mat-error *ngIf="myForm.controls.postcode.invalid && myForm.controls.postcode.dirty">邮政编码{{_formErrorMessageService.getErrorMessage(myForm.controls.postcode)}}</mat-error>
+            </div>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button type="submit" [disabled]="!myForm.valid">确定</button>
+        <button mat-button type="button" mat-dialog-close>取消</button>
+    </mat-dialog-actions>
+</form>
+<loading-message *ngIf="loading"></loading-message>

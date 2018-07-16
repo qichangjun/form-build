@@ -5,7 +5,8 @@ import { AuthGuard } from '../core/guard/auth.guard';
 
 const routes:Routes = [  
   { path:'',component:MainComponent,children:[
-    { path:'',redirectTo:'project',pathMatch:'prefix'},      
+    { path:'',redirectTo:'project',pathMatch:'prefix'},   
+    { path:'businessSet',loadChildren:'../business-set/business-set.module#BusinessSetModule',canActivate:[AuthGuard]},   
     { path:'project',loadChildren:'../project-manage/project-manage.module#ProjectManageModule',canActivate:[AuthGuard]},
     { path:'systemManage',loadChildren:'../system-manage/system-manage.module#SystemManageModule',canActivate:[AuthGuard]}
   ]}, 

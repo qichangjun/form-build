@@ -25,4 +25,10 @@ export class ApiUrlService {
   changeState = "/user/changeStatedsds"
   upload = "/common/upload"
   importUserList = "/user/import"
+
+  getUnitLists = "/unit/list"
+  deleteUnit = "/unit/delete"
+  unitInfo = "/unit/info"
+  getDepartLists = "/dept/list"
+  getDepartmentUser = "/dept/user/list"
 }
