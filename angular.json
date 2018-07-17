@@ -34,7 +34,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/assets/bootstrap3-editable/css/bootstrap-editable.css"
+              "src/assets/bootstrap3-editable/css/bootstrap-editable.css",
+              "src/assets/zTree/main.scss"
             ],
             "scripts": [
               "node_modules/js-cookie/src/js.cookie.js",
@@ -43,7 +44,9 @@
               "src/assets/js/d3.min.js",
               "src/assets/js/XML-Util/ObjTree.js",
               "src/assets/js/XML-Util/jkl-dumper.js",
-              "src/assets/bootstrap3-editable/js/bootstrap-editable.js"
+              "src/assets/bootstrap3-editable/js/bootstrap-editable.js",
+              "src/assets/zTree/zTree_v3/js/jquery.ztree.core-3.5.js",
+              "src/assets/zTree/zTree_v3/js/jquery.ztree.exedit-3.5.js"
             ]
           },
           "configurations": {

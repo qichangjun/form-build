@@ -1,1 +1,87 @@
-<a href="#" id="username">superuser</a>
+<div>
+    <button (click)="addCategory()">新建类目</button>
+</div>
+
+<app-z-tree style="display: block;
+float: left;
+width: 400px;" 
+[ids]="ids" [option]="zTreeOption" (clickTree)="clickTreeEvent($event)"></app-z-tree>
+
+<div [hidden]="!nodeInfo">
+        <div class="title--box" >
+                <span class="title" >详细信息</span>
+                <span  class="fa fa-times cancel--icon" ng-click="vm.showEdit=false"></span>
+        </div>
+        <div class="control--right--scroll--wrapper">
+                <table class="content--title-box" >
+                        <tr>
+                            <td class="title">
+                                <span >标识</span>
+                            </td>
+                            <td class="title-right-line-box">
+                                <div class="right-line"></div>
+                            </td>
+                        </tr>
+                </table>
+                <div>   
+                    <div class="title">
+                            <span class="text-danger">*</span>
+                            <span>类目编号</span>:
+                    </div>   
+                    <a href="#" id="classId">{{nodeInfo?.classId}}</a>                                    
+                </div>
+                <table class="content--title-box" >
+                        <tr>
+                            <td class="title">
+                                <span>类目描述</span>
+                            </td>
+                            <td class="title-right-line-box">
+                                <div class="right-line"></div>
+                            </td>
+                        </tr>
+                </table>
+                <div>
+                        <div class="title">
+                                <span class="text-danger">*</span>
+                                <span >类目名称</span>：
+                            </div>
+                            <a href="#" id="className">{{nodeInfo?.className}}</a>     
+                </div>
+
+                <div>
+                        <div class="title">
+                                <span class="text-danger">*</span>
+                                <span >保管期限</span>：
+                            </div>
+                            <a href="#" id="retentionPeriod">{{nodeInfo?.retentionPeriod}}</a>     
+                </div>
+
+                <div>
+                        <div class="title">
+                                <span class="text-danger">*</span>
+                                <span >整理方式</span>：
+                            </div>
+                            <span>
+                                {{info?.collectionWay == 'individually' ? '按件整理' : '按卷整理'}}
+                            </span>  
+                </div>
+
+                <div>
+                        <div class="title">
+                                <span class="text-danger">*</span>
+                                <span >保留策略</span>：
+                            </div>
+                            <a href="#" id="retentionPolicyName">{{nodeInfo?.retentionPolicyName}}</a>     
+                </div>
+
+                <div>
+                        <div class="title">
+                                <span class="text-danger">*</span>
+                                <span >类目说明</span>：
+                            </div>
+                            <a href="#" id="description">{{nodeInfo?.description}}</a>     
+                </div>
+                
+        </div>
+    
+</div>

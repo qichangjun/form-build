@@ -48,4 +48,15 @@ export class AuthenticationService {
         return Cookies.getJSON('unit_info') || {}
     }
 
+    /**
+     * 
+     */
+    setArchiveFileInfo(archive){
+        let cookiePara={ expires: 999 }
+        Cookies.set('archive_info', archive, cookiePara);
+    }
+
+    getArchiveFileInfo(){
+        return Cookies.getJSON('archive_info') || {}
+    }
 }

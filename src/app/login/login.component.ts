@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       this._authenticationService.setCurrentUser(user_info)
       this._authenticationService.setUserInfo(res.user)
       this._authenticationService.setUnitInfo(res.unit)
+      this._authenticationService.setArchiveFileInfo(res.archiveFile)
       this.router.navigate(['/main'])
     }catch(err){
       return 

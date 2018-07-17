@@ -1,0 +1,74 @@
+<form [formGroup]="myForm" (ngSubmit)="postDate()">
+    <h2 mat-dialog-title>新建档案门类</h2>
+    <mat-dialog-content>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="classId">类目编号:</label>
+                <input type="text" matInput class="form-control" id="classId" formControlName="classId" />
+                <mat-error *ngIf="myForm.controls.classId.invalid && myForm.controls.classId.dirty">类目编号{{_formErrorMessageService.getErrorMessage(myForm.controls.classId)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="className">类目编号:</label>
+                <input type="text" matInput class="form-control" id="className" formControlName="className" />
+                <mat-error *ngIf="myForm.controls.className.invalid && myForm.controls.className.dirty">
+                    类目编号{{_formErrorMessageService.getErrorMessage(myForm.controls.className)}}
+                </mat-error>
+            </div>
+        </mat-form-field>
+
+        <div class="form-group">
+            <mat-radio-group id="collectionWay" formControlName="collectionWay" class="example-radio-group">
+                <mat-radio-button class="example-radio-button" [value]="'individually'">
+                    按件整理
+                </mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="'volume'">
+                    按卷整理
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+
+        <mat-form-field>
+            <label for="retentionPeriod">保管期限:</label>
+            <mat-select id="retentionPeriod" formControlName="retentionPeriod">
+                <mat-option *ngFor="let retentionPeriod of retentionPeriodList" [value]="retentionPeriod.retentionPeriodCode">
+                    {{retentionPeriod.retentionPeriodName}}
+                </mat-option>
+                <mat-option [value]="''">
+                    无
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.retentionPeriod.invalid && myForm.controls.retentionPeriod.dirty">保管期限{{_formErrorMessageService.getErrorMessage(myForm.controls.retentionPeriod)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <label for="retentionPolicyName">保留策略:</label>
+            <mat-select id="retentionPolicyName" formControlName="retentionPolicyName">
+                <mat-option *ngFor="let policy of policyList" [value]="policy.renPolicyName">
+                    {{policy.renPolicyName}}
+                </mat-option>
+                <mat-option [value]="''">
+                    无
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.retentionPolicyName.invalid && myForm.controls.retentionPolicyName.dirty">保留策略{{_formErrorMessageService.getErrorMessage(myForm.controls.retentionPolicyName)}}</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="description">类目说明:</label>
+                <textarea matInput class="form-control" id="description" formControlName="description" cols="30" rows="10"></textarea>
+            </div>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button type="submit" [disabled]="!myForm.valid">确定</button>
+        <button mat-button type="button" mat-dialog-close>取消</button>
+    </mat-dialog-actions>
+</form>
+<loading-message *ngIf="loading"></loading-message>

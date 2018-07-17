@@ -31,4 +31,10 @@ export class ApiUrlService {
   unitInfo = "/unit/info"
   getDepartLists = "/dept/list"
   getDepartmentUser = "/dept/user/list"
+
+  categoryInfo = "/category/info"
+  getPolicy = "/policy/list"
+  getRetentionPeriod = "/retention/period/list"
+  categoryDelete = "/category/delete"
+
 }

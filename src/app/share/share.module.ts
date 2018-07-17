@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoadingMessageComponent } from './component/loadingMessage/loadingMessage.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Sizefilter } from './pipe/size.pipe';
+import { ZTreeComponent } from './component/z-tree/z-tree.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,8 +30,8 @@ import { Sizefilter } from './pipe/size.pipe';
     RouterModule,ColorPickerDirective,
     CollapsibleTreeDirective,NavBarComponent,
     TopSearchBarComponent,LoadingMessageComponent,
-    Sizefilter
+    Sizefilter,ZTreeComponent
   ],
-  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent,LoadingMessageComponent,Sizefilter]
+  declarations: [ColorPickerDirective,CollapsibleTreeDirective,NavBarComponent,TopSearchBarComponent,LoadingMessageComponent,Sizefilter,ZTreeComponent]
 })
 export class ShareModule { }
