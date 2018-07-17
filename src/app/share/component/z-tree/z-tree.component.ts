@@ -48,6 +48,7 @@ export class ZTreeComponent implements OnInit {
       if(info.type == 'ztree:refreshNode'){
         let treeObj = $.fn.zTree.getZTreeObj(this.option.treeId);
         let treeNodes = treeObj.getNodeByParam("id", info.value.id)
+        if (!treeNodes) {return}
         let node = treeNodes.getParentNode()
         if (node){
           this.keepNode = treeObj.getNodeByParam("id", treeNodes.id)

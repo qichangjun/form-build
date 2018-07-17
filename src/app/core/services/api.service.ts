@@ -36,5 +36,6 @@ export class ApiUrlService {
   getPolicy = "/policy/list"
   getRetentionPeriod = "/retention/period/list"
   categoryDelete = "/category/delete"
-
+  categoryUpdate = "/category/update"
+  addCategory = "/category/create"
 }

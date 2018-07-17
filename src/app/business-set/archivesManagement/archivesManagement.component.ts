@@ -14,6 +14,7 @@ declare var $ : any;
   styleUrls: ['./archivesManagement.component.scss']
 })
 export class ArchiveManageComponent implements OnInit {
+  loading : boolean = false;
   zTreeOption : zTreeOption
   ids : Array<any>;
   parameter : {
@@ -90,32 +91,38 @@ export class ArchiveManageComponent implements OnInit {
   }
 
   async getCategoryInfo(id){
-    let policyLists = await this._archiveManagementService.getPolicy()    
-    policyLists.customList = policyLists.customList || []
-    policyLists.systemList = policyLists.systemList || []
-    this.policyList = policyLists.customList.concat(policyLists.systemList)
-    let res = await this._archiveManagementService.getNodeInfo(id)
-    this.nodeInfo = res.categoryInfo
-    let retentionPeriodList = await this._archiveManagementService.getRetentionPeriod(this.nodeInfo.collectionWay)
-    this.retentionPeriodList = []
-    retentionPeriodList.forEach(c => {
-      if(c.overAll == false && c.fondsId == this._authenticationService.getUnitInfo().fonds){
-        this.retentionPeriodList.push(c)
+    this.loading = true
+    try{
+      let policyLists = await this._archiveManagementService.getPolicy()    
+      policyLists.customList = policyLists.customList || []
+      policyLists.systemList = policyLists.systemList || []
+      this.policyList = policyLists.customList.concat(policyLists.systemList)
+      let res = await this._archiveManagementService.getNodeInfo(id)
+      this.nodeInfo = res.categoryInfo
+      let retentionPeriodList = await this._archiveManagementService.getRetentionPeriod(this.nodeInfo.collectionWay)
+      this.retentionPeriodList = []
+      retentionPeriodList.forEach(c => {
+        if(c.overAll == false && c.fondsId == this._authenticationService.getUnitInfo().fonds){
+          this.retentionPeriodList.push(c)
+        }
+      });
+      var addReta = true 
+      for (let i = 0; i < this.retentionPeriodList.length;i++){
+        if (this.retentionPeriodList[i].retentionPeriodCode == this.nodeInfo.retentionPeriod){
+          addReta = false
+          break
+        }else{
+          addReta = true 
+        }
       }
-    });
-    var addReta = true 
-    for (let i = 0; i < this.retentionPeriodList.length;i++){
-      if (this.retentionPeriodList[i].retentionPeriodCode == this.nodeInfo.retentionPeriod){
-        addReta = false
-        break
-      }else{
-        addReta = true 
+      if (addReta){
+        this.retentionPeriodList.push({retentionPeriodCode:this.nodeInfo.retentionPeriod,retentionPeriodName:this.nodeInfo.retentionPeriodName})
       }
-    }
-    if (addReta){
-      this.retentionPeriodList.push({retentionPeriodCode:this.nodeInfo.retentionPeriod,retentionPeriodName:this.nodeInfo.retentionPeriodName})
-    }
-    this.initForm()
+      this.initForm()
+      this.loading = false
+    }catch(err){
+      this.loading = false
+    }    
   }
 
   initForm(){
@@ -142,8 +149,7 @@ export class ArchiveManageComponent implements OnInit {
       }
       $('#' + this.formInput[i].value).editable(option).on('save',function(e,params){                
         _self.nodeInfo[this.id] = params.newValue
-        console.log(_self.nodeInfo)
-        _self.zTreeOption = Object.assign({},_self.zTreeOption)
+        _self.updateCategory.call(_self)        
       })
       $('#' + this.formInput[i].value).editable('setValue', this.nodeInfo[this.formInput[i].value])
     }
@@ -187,12 +193,11 @@ export class ArchiveManageComponent implements OnInit {
           dialogRef.afterClosed().subscribe(res => {
             if (res){        
               let index = this.ids.indexOf(treeNode.id)
-              if (index == -1){
-                return 
-              }
-              this.ids = this.ids.slice(0,index)
-              this.parameter.ids = this.ids.join('.')
-              this.router.navigate([], { queryParams: this.parameter}); 
+              if (index !== -1){
+                this.ids = this.ids.slice(0,index)
+                this.parameter.ids = this.ids.join('.')
+                this.router.navigate([], { queryParams: this.parameter});
+              }                             
               this._EventService.toggleEvent({ type: 'ztree:refreshNode', value: {id:treeNode.id} })
             }      
           })
@@ -206,5 +211,14 @@ export class ArchiveManageComponent implements OnInit {
     $("#diyBtn2_"+treeNode.id).unbind().remove();
     $("#diyBtn3_"+treeNode.id).unbind().remove();
     $("#diyBtn_space_" +treeNode.id).unbind().remove();
+  }
+
+  async updateCategory(){
+    try{
+      let res = await this._archiveManagementService.updateCategory(this.nodeInfo)
+      this.zTreeOption = Object.assign({},this.zTreeOption)
+    }catch(err){
+      this.getCategoryInfo(this.nodeInfo.objectId)
+    }    
   }
 }

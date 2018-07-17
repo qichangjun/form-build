@@ -80,4 +80,42 @@ export class ArchiveManagementService {
         this._responseHandleService.handleError(error)
       );
   }
+
+  updateCategory(info) : Promise<any> {
+    let params = new URLSearchParams();    
+    params.set('callback','JSONP_CALLBACK')
+    for (let key in info){
+      params.set(key,info[key])
+    }
+    params.set('accessToken',this._authenticationService.getCurrentUser().accessToken)
+    params.set('accessUser',this._authenticationService.getCurrentUser().accessUser)  
+    return this.jsonp.get(this._configService.ermsApiUrl() + this._apiUrlService['categoryUpdate'],{search:params})
+      .toPromise()
+      .then(res=>
+        this._responseHandleService.extractData(res)
+      )
+      .catch(error =>
+        this._responseHandleService.handleError(error)
+      );
+  }
+
+  addCategory(info,parentId) : Promise<any> {
+    let params = new URLSearchParams();    
+    params.set('callback','JSONP_CALLBACK')
+    for (let key in info){
+      params.set(key,info[key])
+    }
+    params.set('parentId',parentId)
+    params.set('accessToken',this._authenticationService.getCurrentUser().accessToken)
+    params.set('accessUser',this._authenticationService.getCurrentUser().accessUser)  
+    return this.jsonp.get(this._configService.ermsApiUrl() + this._apiUrlService['addCategory'],{search:params})
+      .toPromise()
+      .then(res=>
+        this._responseHandleService.extractData(res)
+      )
+      .catch(error =>
+        this._responseHandleService.handleError(error)
+      );
+  }
+
 }

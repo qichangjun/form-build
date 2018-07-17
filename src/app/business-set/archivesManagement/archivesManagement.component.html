@@ -7,7 +7,7 @@ float: left;
 width: 400px;" 
 [ids]="ids" [option]="zTreeOption" (clickTree)="clickTreeEvent($event)"></app-z-tree>
 
-<div [hidden]="!nodeInfo">
+<div [hidden]="!nodeInfo" >
         <div class="title--box" >
                 <span class="title" >详细信息</span>
                 <span  class="fa fa-times cancel--icon" ng-click="vm.showEdit=false"></span>
@@ -83,5 +83,5 @@ width: 400px;"
                 </div>
                 
         </div>
-    
+        <loading-message *ngIf="loading"></loading-message>
 </div>

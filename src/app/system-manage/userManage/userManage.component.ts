@@ -181,3 +181,6 @@ export class UserManageComponent implements OnInit {
     this.router.navigate([],{queryParams:{currentPage:e}})    
   }
 }
+
+
+

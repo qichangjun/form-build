@@ -56,8 +56,14 @@ export class addCategoryDialog {
         });
     }
 
-    postDate(){
-        console.log(this.myForm)
+    async postDate(){
+        let info = Object.assign({},this.myForm.value)
+        this.retentionPeriodList.forEach(c=>{
+            if (info.retentionPeriod == c.retentionPeriodCode){
+                info['retentionPeriodName'] = c.retentionPeriodName
+            }
+        })
+        await this._archiveManagementService.addCategory(info,this.data.id)        
         this.dialogRef.close(true)
     }
 
