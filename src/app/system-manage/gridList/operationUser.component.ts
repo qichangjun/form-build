@@ -18,7 +18,7 @@ import { ICellRendererAngularComp} from "ag-grid-angular/main";
     }
   
     public editUser() {
-        this.params.context.componentParent.edit(this.params.data)
+        this.params.context.componentParent.editUser(this.params.data)
     }
 
     public frozenUser(){
