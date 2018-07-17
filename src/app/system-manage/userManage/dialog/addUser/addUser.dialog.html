@@ -1,0 +1,81 @@
+<form [formGroup]="myForm" (ngSubmit)="postDate()">
+    <h2 mat-dialog-title>新建用户</h2>
+    <mat-dialog-content>
+        <mat-form-field>
+            <div class="form-group">
+                <label for="userDisplayName">用户名:</label>
+                <input [disabled]="true" type="text" matInput class="form-control" id="userDisplayName" formControlName="userDisplayName" />
+                <mat-error *ngIf="myForm.controls.userDisplayName.invalid && myForm.controls.userDisplayName.dirty">用户名{{_formErrorMessageService.getErrorMessage(myForm.controls.userDisplayName)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="userPassword">密码:</label>
+                <input type="password" matInput class="form-control" id="userPassword" formControlName="userPassword" />
+                <mat-error *ngIf="myForm.controls.userPassword.invalid && myForm.controls.userPassword.dirty">密码{{_formErrorMessageService.getErrorMessage(myForm.controls.userPassword)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="rePassword">邮件地址:</label>
+                <input type="email" matInput class="form-control" id="userAddress" formControlName="userAddress" />
+                <mat-error *ngIf="myForm.controls.userAddress.invalid && myForm.controls.userAddress.dirty">邮件地址{{_formErrorMessageService.getErrorMessage(myForm.controls.userAddress)}}</mat-error>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="form-group">
+                <label for="telphone">电话:</label>
+                <input type="text" matInput class="form-control" id="telphone" formControlName="telphone" />                
+            </div>
+        </mat-form-field>
+        <mat-form-field>
+            <label for="deptGroupName">所属部门:</label>
+            <mat-select  id="deptGroupName" formControlName="deptGroupName">
+                <mat-option *ngFor="let deptGroup of deptGroupList" [value]="deptGroup.deptGroupName">
+                    {{deptGroup.deptDisplayName}}
+                </mat-option>
+                <mat-option [value]="''">
+                    无
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.deptGroupName.invalid && myForm.controls.deptGroupName.dirty">所属部门{{_formErrorMessageService.getErrorMessage(myForm.controls.deptGroupName)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <label for="roleName">角色:</label>
+            <mat-select  id="roleName" formControlName="roleName">
+                <mat-option *ngFor="let roleName of roleNameLists" [value]="roleName.value">
+                    {{roleName.displayName}}
+                </mat-option>
+                <mat-option [value]="''">
+                    无
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.roleName.invalid && myForm.controls.roleName.dirty">角色{{_formErrorMessageService.getErrorMessage(myForm.controls.roleName)}}</mat-error>
+        </mat-form-field>
+
+       
+        <div class="form-group">
+            <label for="deptOfficer">是否为部门负责人:</label>
+            <mat-checkbox class="example-margin" id="deptOfficer" formControlName="deptOfficer"></mat-checkbox>                                
+        </div>
+      
+        <mat-form-field>
+            <div class="form-group">
+                <label for="userCode">序号:</label>
+                <input type="text" matInput class="form-control" id="userCode" formControlName="userCode" />                
+            </div>
+        </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button type="submit" [disabled]="!myForm.valid">确定</button>
+        <button mat-button type="button" mat-dialog-close>取消</button>
+    </mat-dialog-actions>
+</form>
+<loading-message *ngIf="loading"></loading-message>

@@ -6,9 +6,11 @@ import { ShareModule } from './share/share.module';
 import { AppComponent } from './app.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppRouterModule } from './app-router.module';
+import { UploadFileComponent } from './uploadFIle/uploadFIle.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UploadFileComponent
   ],
   imports: [    
     BrowserModule,

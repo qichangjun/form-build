@@ -3,3 +3,84 @@
 @import 'node_modules/ng2-dnd/bundles/style.css';
 
 @import 'node_modules/font-awesome/css/font-awesome.min.css';
+@import '../node_modules/ag-grid/dist/styles/ag-theme-material.css';
+@import '../node_modules/ag-grid/dist/styles/ag-grid.css';
+
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
+.ag-body-container{
+  width:100% !important;
+}
+.ag-header-row{
+  width: 100% !important;
+}
+.node rect{
+    cursor:pointer;
+    stroke:#8bd7c8;
+    stroke-width:0px;
+    fill:#1ab394
+  }
+  .node rect.block{
+    cursor:pointer;
+    stroke:#8cc0e1;
+    stroke-width:0px;
+    fill:#1c84c6
+  }
+  .node rect.node{
+    cursor:pointer;
+    stroke:#fad4aa;
+    stroke-width:0px;
+    fill:#f8ac59;
+  }
+  .nodeTool {
+    transition: 0.3s linear all; -webkit-transition: 0.3s linear all;
+    transform: translateY(-50px);
+    opacity: 0
+   }
+  .nodeTool-animate {
+    transform: translateY(0px);
+    opacity: 1
+  }
+  .nodeTool.ng-enter {opacity: 0;transform: translateY(30px);}
+  .nodeTool.ng-enter.ng-enter-active { opacity: 1; }
+  .nodeTool.ng-leave {opacity: 1;}
+  .nodeTool.ng-leave.ng-leave-active { opacity: 0; transform: translateY(30px);}
+  .node text{
+    font-size:12px;
+    cursor: default;
+  }
+  
+  path.link{
+    fill:none;
+    stroke:#ccc;
+    stroke-width:1.5px
+  }
+  .node ellipse {
+    stroke:#ccc;
+    stroke-width:1.5px;
+    cursor:pointer;
+  }
+  .cursor-pointer{
+    fill:#5B646E;
+    cursor:pointer;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  .icon-size{
+    font-size: 15px !important;
+    cursor: pointer;
+    fill:#5B646E;
+  }
+  .new-rect{
+    stroke-width: 5px !important;
+    stroke: #ffffff !important;
+    fill: #1c84c6 !important;
+  }
+  .inside--text{
+    display: inline-block;
+    width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

@@ -8,7 +8,17 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -23,10 +33,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/bootstrap3-editable/css/bootstrap-editable.css"
             ],
             "scripts": [
-              "node_modules/dragula/dist/dragula.js"
+              "node_modules/js-cookie/src/js.cookie.js",
+              "node_modules/dragula/dist/dragula.js",
+              "node_modules/jquery/dist/jquery.js",
+              "src/assets/js/d3.min.js",
+              "src/assets/js/XML-Util/ObjTree.js",
+              "src/assets/js/XML-Util/jkl-dumper.js",
+              "src/assets/bootstrap3-editable/js/bootstrap-editable.js"
             ]
           },
           "configurations": {

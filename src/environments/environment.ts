@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  infoarchivesApiUrl : '/infoarchivesapi',
+  // adminApiUrl : '/adminapi',
+  adminApiUrl : 'http://122.227.101.16/ermsapi',
+  ermsApiUrl : 'http://122.227.101.16/ermsapi'
 };
 
 /*
