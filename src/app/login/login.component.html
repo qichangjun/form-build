@@ -1,59 +1,93 @@
-<div class="normal--user--login">
-  <div class="normal--user--login__content--box">
-    <div class="login--location">     
-      电子文件管理系统
-    </div>
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate class="user--login--box">
-      <h3 class="caption" >登陆</h3>
-      <div class="form-group input-content-box" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-        <label class="title" for="username">用户名</label>
-        <div class="value--input" >
-          <span class="fa fa-user icon-bar" [ngClass]="{error: showErrorMessage,focusInput:focuseUserName}"></span>
-          <input
-            type="text"
-            class="form-control form--input shake"
-            [ngClass]="{error: showErrorMessage}"
-            (focus)="showErrorMessage=false;focuseUserName = true"
-            (blur)="focuseUserName = false"
-            (change)="showErrorMessage=false"
-            placeholder="Account"
-            name="username"
-            [(ngModel)]="model.username"
-            #username="ngModel"
-            required />
-          <span class="fa fa-times-circle clear--data--btn" [hidden]="!model.username" (mouseup)="model.username=''"></span>
+<div class="login--component--wrapper">
+    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate class="login--wrap">
+        <div class="login--wrap__content--box">
+            <div class="user--logo--box">
+                <div class="system--prompt--operation--box">
+                  <h1>电子文件管理系统</h1>
+                    <h2>注意!</h2>
+                    <div class="prompt--info">
+                        <div class="serial--number">1</div>
+                        <div class="content">第一次使用ERMS需要进行一些配置，请点击<a href="">这里</a>下载配置文件然后双击运行。</div>
+                    </div>
+                    <div class="prompt--info">
+                        <div class="serial--number">2</div>
+                        <div class="content">如果您需要操作手册，请点击<a href="">这里</a>下载。</div>
+                    </div>
+                    <div class="prompt--info">
+                        <div class="serial--number">3</div>
+                        <div class="content">技术支持：0000-xxxxxx</div>
+                    </div>
+                    <div class="prompt--info">
+                        <div class="serial--number">4</div>
+                        <div class="content">我们强烈推荐您使用以下浏览器已达到最佳使用效果。</div>
+                    </div>
+                    <ul class="browsers">
+                        <li><a href=""><img src="assets/images/chrome.png" alt="谷歌"/></a></li>
+                        <li><a href=""><img src="assets/images/firefox.png" alt="火狐"/></a></li>
+                        <li><a href=""><img src="assets/images/ie.png" alt="IE"/></a></li>
+                        <li><a href=""><img src="assets/images/safari.png" alt="safari"/></a></li>
+                        <li><a href=""><img src="assets/images/opera.png" alt="opera "/></a></li>
+                    </ul>
+                </div>
+                <div class="user--input--box">
+                    <h3 class="caption" >登录</h3>
+                    <div class="form-group input-content-box" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                      <label class="title" for="username">用户名</label>
+                      <div class="value--input" >
+                        <span class="fa fa-user icon-bar" [ngClass]="{error: showErrorMessage,focusInput:focuseUserName}"></span>
+                        <input
+                          type="text"
+                          class="form-control form--input shake"
+                          [ngClass]="{error: showErrorMessage}"
+                          (focus)="showErrorMessage=false;focuseUserName = true"
+                          (blur)="focuseUserName = false"
+                          (change)="showErrorMessage=false"
+                          placeholder="Account"
+                          name="username"
+                          [(ngModel)]="model.username"
+                          #username="ngModel"
+                          required />
+                        <span class="fa fa-times-circle clear--data--btn" [hidden]="!model.username" (mouseup)="model.username=''"></span>
+                      </div>
+                    </div>
+                    <div class="form-group input-content-box" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                      <label class="title" for="password">密&nbsp;&nbsp;码</label>
+                      <div class="value--input" >
+                        <span class="fa fa-key icon-bar" [ngClass]="{error: showErrorMessage,focusInput:focusePssword}"></span>
+                        <input
+                          type="password"
+                          class="form-control form--input"
+                          [ngClass]="{error: showErrorMessage}"
+                          (focus)="showErrorMessage=false;focusePssword = true"
+                          (blur)="focusePssword = false"
+                          (change)="showErrorMessage=false"
+                          placeholder="Password"
+                          name="password"
+                          [(ngModel)]="model.password"
+                          #password="ngModel"
+                          required />
+                          
+                        <span class="fa fa-times-circle clear--data--btn" [hidden]="!model.password" (mouseup)="model.password=''"></span>
+                      </div>
+                    </div>
+                    <button id="goLogin" [disabled]="loading" class="btn btn-primary submit-btn">登录</button>
+                    <div *ngIf="f.submitted && !username.valid" class="login--warning--prompt">用户名不能为空</div>
+                    <div *ngIf="f.submitted && !password.valid" class="login--warning--prompt">密码不能为空</div>
+                    <div [hidden]="!showErrorMessage" class="login--warning--prompt">
+                      <span class="fa fa-exclamation-triangle"></span>
+                      {{errorMessage}}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="form-group input-content-box" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <label class="title" for="password">密码</label>
-        <div class="value--input" >
-          <span class="fa fa-key icon-bar" [ngClass]="{error: showErrorMessage,focusInput:focusePssword}"></span>
-          <input
-            type="password"
-            class="form-control form--input"
-            [ngClass]="{error: showErrorMessage}"
-            (focus)="showErrorMessage=false;focusePssword = true"
-            (blur)="focusePssword = false"
-            (change)="showErrorMessage=false"
-            placeholder="Password"
-            name="password"
-            [(ngModel)]="model.password"
-            #password="ngModel"
-            required />
-           
-          <span class="fa fa-times-circle clear--data--btn" [hidden]="!model.password" (mouseup)="model.password=''"></span>
-        </div>
-      </div>
-      <button id="goLogin" [disabled]="loading" class="btn btn-primary submit-btn">登陆</button>
-      <div *ngIf="f.submitted && !username.valid" class="login--warning--prompt">用户名不能为空</div>
-      <div *ngIf="f.submitted && !password.valid" class="login--warning--prompt">密码不能为空</div>
-      <div [hidden]="!showErrorMessage" class="login--warning--prompt">
-        <span class="fa fa-exclamation-triangle"></span>
-        {{errorMessage}}
-      </div>
-    </form>
-  </div>
-
+        
+        
+        
+      </form>
 </div>
+
+
+
+
 
 
