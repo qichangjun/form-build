@@ -38,4 +38,7 @@ export class ApiUrlService {
   categoryDelete = "/category/delete"
   categoryUpdate = "/category/update"
   addCategory = "/category/create"
+
+  getFileLists = "/manage/file/list"
+  getBreadCrumb = "/common/crumbs"
 }

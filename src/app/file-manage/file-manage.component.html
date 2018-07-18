@@ -1,0 +1,16 @@
+
+<bread-crumb [rootName]="'部门文件'" [breadCrumbLists]="breadCrumbLists" [idLists]="parameter.ids" (clickBreadCrumb)="clickTreeOrBreadCrumb($event)"></bread-crumb>
+<app-z-tree style="display: block;
+float: left;
+width: 400px;" 
+[ids]="ids" [option]="zTreeOption" (clickTree)="clickTreeEvent($event)"></app-z-tree>
+
+
+<ag-grid-angular #agGrid 
+                style="width: 100%; height: 500px;" class="ag-theme-material"
+                enableColResize
+                enableSorting
+                rowHeight="52"
+                rowSelection="multiple"                        
+                [gridOptions]="gridOptions">
+</ag-grid-angular>
