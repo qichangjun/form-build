@@ -64,6 +64,7 @@ export class DepartManageComponent implements OnInit {
       } 
       this.gridOptions.api.setRowData(res)       
       this.gridOptions.api.hideOverlay()
+      this.gridOptions.api.sizeColumnsToFit();
       if(res.length == 0){
         this.gridOptions.api.showNoRowsOverlay()
       }

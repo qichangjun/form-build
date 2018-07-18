@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
+  loading : boolean = false;
   model = {
     username : '',
     password : ''

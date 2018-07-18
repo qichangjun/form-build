@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { GridOptions } from "ag-grid";
 import { Router,ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -15,7 +15,7 @@ import { Options as zTreeOption } from '../share/component/z-tree/option.class';
   templateUrl: './file-manage.component.html',
   styleUrls: ['./file-manage.component.css']
 })
-export class FileManageComponent implements OnInit {
+export class FileManageComponent implements OnInit,OnDestroy {
   gridStorageName : string = 'fileManage'
   totalElement : number = 1;
   routerSubscription : any;
@@ -62,6 +62,9 @@ export class FileManageComponent implements OnInit {
       } else {
         event.node.setSelected(true);
       }
+    },
+    onRowDoubleClicked:(event)=>{      
+      this.clickName(event.data)
     }
   }
   breadCrumbLists : Array<any> = [];
@@ -95,6 +98,9 @@ export class FileManageComponent implements OnInit {
       this.getList()
       this.getBreadCrumb()
     })
+  }
+  ngOnDestroy(){
+    this.routerSubscription.unsubscribe()
   }
 
   ngOnInit() {
@@ -165,7 +171,9 @@ export class FileManageComponent implements OnInit {
     if (columnState) {
       columnState = JSON.parse(columnState);    
       this.gridOptions.columnApi.setColumnState(columnState)  
+      return 
     }  
+    this.gridOptions.api.sizeColumnsToFit();
   }
 
   clickName(data){

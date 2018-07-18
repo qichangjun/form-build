@@ -114,7 +114,9 @@ export class FileManageService {
           headerCheckboxSelection: true,
           checkboxSelection:true,
           suppressSizeToFit : true,
-          suppressResize : true
+          // suppressSizeToFit : true,
+          // suppressResize : true,
+          width:50
         },     
         {
           headerName: "文件名",

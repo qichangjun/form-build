@@ -31,17 +31,13 @@
                 </div>
                 <div class="user--input--box">
                     <h3 class="caption" >登录</h3>
-                    <div class="form-group input-content-box" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                    <div class="form-group input-content-box">
                       <label class="title" for="username">用户名</label>
                       <div class="value--input" >
-                        <span class="fa fa-user icon-bar" [ngClass]="{error: showErrorMessage,focusInput:focuseUserName}"></span>
+                        <span class="fa fa-user icon-bar" ></span>
                         <input
                           type="text"
                           class="form-control form--input shake"
-                          [ngClass]="{error: showErrorMessage}"
-                          (focus)="showErrorMessage=false;focuseUserName = true"
-                          (blur)="focuseUserName = false"
-                          (change)="showErrorMessage=false"
                           placeholder="Account"
                           name="username"
                           [(ngModel)]="model.username"
@@ -50,33 +46,25 @@
                         <span class="fa fa-times-circle clear--data--btn" [hidden]="!model.username" (mouseup)="model.username=''"></span>
                       </div>
                     </div>
-                    <div class="form-group input-content-box" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                    <div class="form-group input-content-box" >
                       <label class="title" for="password">密&nbsp;&nbsp;码</label>
                       <div class="value--input" >
-                        <span class="fa fa-key icon-bar" [ngClass]="{error: showErrorMessage,focusInput:focusePssword}"></span>
+                        <span class="fa fa-key icon-bar"></span>
                         <input
                           type="password"
                           class="form-control form--input"
-                          [ngClass]="{error: showErrorMessage}"
-                          (focus)="showErrorMessage=false;focusePssword = true"
-                          (blur)="focusePssword = false"
-                          (change)="showErrorMessage=false"
                           placeholder="Password"
                           name="password"
                           [(ngModel)]="model.password"
                           #password="ngModel"
                           required />
-                          
                         <span class="fa fa-times-circle clear--data--btn" [hidden]="!model.password" (mouseup)="model.password=''"></span>
                       </div>
                     </div>
                     <button id="goLogin" [disabled]="loading" class="btn btn-primary submit-btn">登录</button>
                     <div *ngIf="f.submitted && !username.valid" class="login--warning--prompt">用户名不能为空</div>
                     <div *ngIf="f.submitted && !password.valid" class="login--warning--prompt">密码不能为空</div>
-                    <div [hidden]="!showErrorMessage" class="login--warning--prompt">
-                      <span class="fa fa-exclamation-triangle"></span>
-                      {{errorMessage}}
-                    </div>
+    
                 </div>
             </div>
         </div>

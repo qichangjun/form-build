@@ -54,17 +54,16 @@ export class UnitManageComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    // this.getList()
+  ngOnInit() {  
   }
 
   async getList(){
     if (this.gridOptions.api) {
       this.gridOptions.api.setRowData([]) 
       this.gridOptions.api.showLoadingOverlay()      
-    }    
+    } 
     try{
-      let res = await this._unitManageService.getUnitLists();
+      let res = await this._unitManageService.getUnitLists();      
       let columnState = localStorage.getItem(this.gridStorageName)
       this.gridOptions.api.setColumnDefs(this._unitManageService.getUnitColumnDefs());  
       if (columnState) {
@@ -74,6 +73,7 @@ export class UnitManageComponent implements OnInit {
       this.gridOptions.api.setRowData(res.unitList)       
       this.totalElement = res.pageInfo.totalCount
       this.gridOptions.api.hideOverlay()
+      this.gridOptions.api.sizeColumnsToFit();
       if(res.unitList.length == 0){
         this.gridOptions.api.showNoRowsOverlay()
       }

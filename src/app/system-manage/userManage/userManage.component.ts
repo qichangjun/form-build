@@ -72,14 +72,15 @@ export class UserManageComponent implements OnInit {
     private _authenticationService : AuthenticationService,
     private _EventService : EventService
   ) { 
-    this.routerSubscription = this.route.queryParams.subscribe((data: any)=>{      
-      this.parameter = Object.assign(this.parameter,data)
-      this.getList()
-    })
+    
   }
 
   ngOnInit() {   
     this.initUpload() 
+    this.routerSubscription = this.route.queryParams.subscribe((data: any)=>{      
+      this.parameter = Object.assign(this.parameter,data)
+      this.getList()
+    })
   }
 
   initUpload(){
@@ -131,6 +132,7 @@ export class UserManageComponent implements OnInit {
       this.gridOptions.api.setRowData(res.resultSet)       
       this.totalElement = res.pageInfo.totalCount
       this.gridOptions.api.hideOverlay()
+      this.gridOptions.api.sizeColumnsToFit();
       if(res.resultSet.length == 0){
         this.gridOptions.api.showNoRowsOverlay()
       }
