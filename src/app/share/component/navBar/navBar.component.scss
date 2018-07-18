@@ -1,0 +1,168 @@
+.navbar--left--wrap{
+    position: absolute;
+    width: 189px;
+    top: 65px;
+    left: 0;
+    bottom: 0;
+    background: #565859;
+    z-index: 4;
+    &_info{
+        margin-top: 20px;
+        text-align: center;
+        margin-bottom: 30px;
+        a{
+            color: #ffffff;
+        }
+        &__link{
+          display: inline-block;
+          height: 40px;
+          line-height: 40px;
+        }
+        .navbar--admin--icon{
+          width: 45px;
+          height: 45px;
+          margin-right: 5px;
+          //border: 3px solid #ffffff;
+          border-radius: 50%;
+        }
+    }
+    &_links{
+        //height: 100%;
+        //float: left;
+        //margin-left: 20px;
+        //为 垂直居中对齐
+        padding-top: 3px;
+        font-size: 0;
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar--title{
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+          margin-left: 15px;
+        }
+        .link{
+          //height: 100%;
+          width: 100%;
+          //height: 65px;
+          //line-height: 65px;
+          height: 50px;
+          line-height: 50px;
+          display: inline-block;
+          //margin-right: 10px;
+          //padding: 0 3px;
+          //padding: 0 3px 0 16px;
+          padding: 0 3px 0 34px;
+          color: #ebebeb;
+          cursor: pointer;
+          border-left:  5px solid transparent;
+          font-size: 13px;
+          outline: none;
+          a{
+              color: inherit;
+          }
+          .icon{
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 18px;
+            width: 19px;
+          }
+          .caret{
+            color: #ebebeb;
+          }
+          &.active,&:hover{
+            //border-left:  5px solid #E8762C;
+            border-left:  5px solid #DA7B3F;
+            color: #ffffff;
+            background: #454648;
+            .caret{
+              color: #ffffff;
+            }
+            a{
+              color: #ffffff;
+            }
+            .myBorrow--icon{
+              background: url(/assets/images/myBorrow--icon-w.png) center no-repeat;
+            }
+            .pendingArchiveArea--icon{
+              background: url(/assets/images/pendingArchiveArea--icon-w.png) center no-repeat;
+            }
+            .archiveArea--icon{
+              background: url(/assets/images/archiveArea--icon-w.png) center no-repeat;
+            }
+            .areaOfUse--icon{
+              background: url(/assets/images/dataManage--icon-w.png) center no-repeat;
+            }
+            .dataManage--icon{
+              background: url(/assets/images/areaOfUse--icon-w.png) center no-repeat;
+            }
+            .checkYear--icon{
+              background: url(/assets/images/checkYear--icon-w.png) center no-repeat;
+            }
+            .businessSet--icon{
+              background: url(/assets/images/businessSet--icon-w.png) center no-repeat;
+            }
+            .systemManage--icon{
+              //background: url(/assets/images/myBorrow--icon-w.png) center no-repeat;
+              color: #ffffff;
+            }
+          }
+        }
+        .myBorrow--icon{
+          display: inline-block;
+          width: 28px;
+          height: 100%;
+          background: url(/assets/images/myBorrow--icon.png) center no-repeat;
+        }
+        .pendingArchiveArea--icon{
+          display: inline-block;
+          width: 28px;
+          height: 100%;
+          background: url(/assets/images/pendingArchiveArea--icon.png) center no-repeat;
+        }
+        .archiveArea--icon{
+          display: inline-block;
+          width: 28px;
+          height: 100%;
+          background: url(/assets/images/archiveArea--icon.png) center no-repeat;
+        }
+        .areaOfUse--icon{
+          display: inline-block;
+          width: 30px;
+          height: 100%;
+          background: url(/assets/images/dataManage--icon.png) center no-repeat;
+        }
+        .dataManage--icon{
+          display: inline-block;
+          width: 25px;
+          height: 100%;
+          margin-left: 2px;
+          background: url(/assets/images/areaOfUse--icon.png) center no-repeat;
+        }
+        .checkYear--icon{
+          display: inline-block;
+          width: 25px;
+          height: 100%;
+          background: url(/assets/images/checkYear--icon.png) center no-repeat;
+        }
+        .businessSet--icon{
+          display: inline-block;
+          width: 28px;
+          height: 100%;
+          background: url(/assets/images/businessSet--icon.png) center no-repeat;
+        }
+        .systemManage--icon{
+          display: inline-block;
+          font-size: 25px;
+          color: #b8b8b8;
+          position: relative;
+          top: 10px;
+          //left: 2px;
+          //width: 28px;
+          //height: 100%;
+          //background: url(/assets/images/myBorrow--icon.png) center no-repeat;
+        }
+      }
+}

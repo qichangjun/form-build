@@ -1,1 +1,29 @@
-<mat-toolbar>My App</mat-toolbar>
+<mat-toolbar class="toolbar--head--wrap">
+   <a class="toolbar--head--wrap_logo">ERMS</a>
+   <div class="toolbar--head--wrap_search">
+       <div class="top--head__company--title">
+           <div class="title">电子文件管理系统</div>
+           <div class="title">Electronic Records Management System</div>
+       </div>
+       <div class="top--head__company--title top--head__search--box">
+            <input type="text"
+            ng-model="searchParameter.keywords"
+            class="form-control search--box__input search-input-animation"
+            ng-init="searchParameter.keywords=vm.keywords"
+            id="exampleInputEmail3"
+            placeholder=""
+            ng-focus="searchInput = true"
+            ng-blur="searchInput = false"
+            ng-class="{true: 'search-active', false: 'search-inactive'}[searchInput]"
+            ng-keyup="vm.searchEnRelated(searchParameter,$event)"
+             >
+            <i class="fa fa-search search--icon" ng-click="searchInput = true"></i>
+            <div class="remove--btn"
+                style="right: -50px"
+                ng-click="searchInput = true;searchParameter.keywords = ''"
+                ng-class="{true: 'delete-active', false: 'delete-inactive'}[searchInput]">
+                <i class="fa fa-times-circle"></i>
+            </div>
+       </div>
+   </div>
+</mat-toolbar>
