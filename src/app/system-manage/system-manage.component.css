@@ -1,0 +1,16 @@
+.main--content--area--wrap{
+    position: absolute;
+    top: 65px;
+    bottom: 0;
+    left: 189px;
+    right: 0;
+    margin: 0 auto;
+}
+.sidebar--two--level-wrap{
+    width: 250px;
+    height: 100%;
+    background: #ECEFF1;
+    border-right: none;
+    border-top: none;
+    padding-top: 19px;
+}

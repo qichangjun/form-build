@@ -1,17 +1,32 @@
-<div>
-    <ul>
-        <li routerLinkActive="active">
-            <a routerLink="./systemManage">系统管理</a>
-        </li>
-        <li routerLinkActive="active">
-            <a routerLink="./project">系统接入</a>
-        </li>
-
-        <li routerLinkActive="active">
-                <a routerLink="./businessSet">业务设定</a>
+<div class="navbar--left--wrap">
+    <div class="navbar--left--wrap_info">
+        <!-- <span dropdown  class="dropdown">
+            <a href="" dropdown-toggle>
+                <img class="navbar--admin--icon" ng-src=""  alt=""/>用户
+            </a>
+            <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="hs-navbar-dropdown-info">   
+                <li>
+                    
+                </li>
+            </ul>
+        </span> -->
+        <a  routerLink="/login" >
+            登出
+        </a>
+    </div>
+    <div class="navbar--left--wrap_links">
+        <ul>
+            <li routerLinkActive="active" class="link" routerLink="./systemManage">
+               <span class="fa fa-cogs icon"></span><span class="sidebar--title">系统管理</span>
             </li>
-    </ul>
+            <li routerLinkActive="active" class="link" routerLink="./project">
+                <span class="fa fa-flag-checkered icon"></span><span class="sidebar--title">系统接入</span>
+            </li>
+            <li routerLinkActive="active" class="link" routerLink="./businessSet">
+                <span class="fa fa-random icon"></span><span class="sidebar--title">业务设定</span>
+            </li>
+        </ul>
+    </div>
 </div>
-<div>
-    <a routerLink="/login">登出</a>
-</div>
+
+

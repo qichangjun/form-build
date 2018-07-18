@@ -1,43 +1,43 @@
-
-<div  class="anim-slide-left project--manage--main--content--wrapper"  >
-
-        <div class="md-2-line new--project--btn--wrap" >
-            <div class="md-list-item-text">
-                <h3 class="title" >系统接入</h3>
-                <p class="prompt-content" >建立项目针对每个归档系统建立归档策略和业务模板</p>
+<div class="main--content--area--wrap">
+    <div  class="anim-slide-left project--manage--main--content--wrapper"  >
+            <div class="md-2-line new--project--btn--wrap" >
+                <div class="md-list-item-text">
+                    <h3 class="title" >系统接入</h3>
+                    <p class="prompt-content" >建立项目针对每个归档系统建立归档策略和业务模板</p>
+                </div>
+                <div class="new--project--btn--box">
+                    <button (click)="newProject($event)" class="red--btn new--project--btn">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span >系统接入</span>
+                    </button>
+                </div>            
             </div>
-            <div class="new--project--btn--box">
-                <button (click)="newProject($event)" class="red--btn new--project--btn">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span >系统接入</span>
-                </button>
-            </div>            
-        </div>
-
-</div>
-<mat-card class="example-card" *ngFor="let item of projectList;let i = index" [routerLink]="['../projectManage/projectEdit']" [queryParams]='{objectId:item.id}' >
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>
-        <img  [src]="'assets/images/'+ item.databaseName +'--icon.png'" width="60%"  alt="图片"/>
-      </mat-card-title>      
-    </mat-card-header>
     
-    <mat-card-content>
-        <div  class="project--manage--list--img--box" >
-            <span class="project--manage--list--img--box__do--center">            
-                 <div class="md-headline" title="{{item.projectName}}">{{item.projectName}}</div>
-                <div class="md-subhead" title="{{item.systemName}}">{{item.systemName}}</div>
-            </span>
-        </div>
-    </mat-card-content>
-    <mat-card-actions>
-        <div class="item--create--date">{{item.createDate  | date:'yyyy-MM-dd'}} <span translate="MODULES_PROJECTMANAGE_CREATE">创建</span></div>
-        <div class="card--actions--pull--right">
-            <div class="icon--button project-icon-tool" aria-label="More">
-                <span class="glyphicon glyphicon-trash" (click)="deleteProject($event,item,i)">删除</span>
+    </div>
+    <mat-card class="example-card" *ngFor="let item of projectList;let i = index" [routerLink]="['../projectManage/projectEdit']" [queryParams]='{objectId:item.id}' >
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>
+            <img  [src]="'assets/images/'+ item.databaseName +'--icon.png'" width="60%"  alt="图片"/>
+            </mat-card-title>      
+        </mat-card-header>
+        
+        <mat-card-content>
+            <div  class="project--manage--list--img--box" >
+                <span class="project--manage--list--img--box__do--center">            
+                        <div class="md-headline" title="{{item.projectName}}">{{item.projectName}}</div>
+                    <div class="md-subhead" title="{{item.systemName}}">{{item.systemName}}</div>
+                </span>
             </div>
-        </div>
-    </mat-card-actions>
-  </mat-card>
-  <loading-message *ngIf="loading"></loading-message>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="item--create--date">{{item.createDate  | date:'yyyy-MM-dd'}} <span translate="MODULES_PROJECTMANAGE_CREATE">创建</span></div>
+            <div class="card--actions--pull--right">
+                <div class="icon--button project-icon-tool" aria-label="More">
+                    <span class="glyphicon glyphicon-trash" (click)="deleteProject($event,item,i)">删除</span>
+                </div>
+            </div>
+        </mat-card-actions>
+        </mat-card>
+        <loading-message *ngIf="loading"></loading-message>
+</div>
