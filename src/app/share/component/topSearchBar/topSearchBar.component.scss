@@ -1,0 +1,248 @@
+.toolbar--head--wrap{
+    height: 65px;
+    border-bottom: 1px solid #4088DE;
+    background: #4088DE;
+    padding: 0;
+    position: relative;
+    &_logo{
+        height: 100%;
+        float: left;
+        width: 189px;
+        font-size: 24px;
+        color: #ffffff !important;
+        line-height: 65px;
+        text-align: center;
+        background: #3D81D3;
+    }
+    &_search{
+        height: 100%;
+        // margin-left: 189px;
+        width: calc(100% - 189px);
+        padding-left: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .top--head__company--title{
+            display: inline-block;
+            color: #ffffff;
+            font-size: 16px;
+            .title{
+              line-height: 1;
+              margin-top: 5px;
+              &:first-child{
+                //margin-top: 15px;
+              }
+              &:last-child{
+                font-size: 12px;
+              }
+            }
+        }
+        .top--head__search--box{
+            position:relative;
+            height: 100%;
+            //margin-right: 20px;
+            margin-right: 8px;
+            .search--box__input{
+              height: 100%;
+              //width: 450px;
+              background: #3d81d3;
+              border-color: #3d81d3;
+              border-radius: 0;
+              text-indent: 25px;
+              padding-right: 25px;
+              color: #ffffff;
+              font-size: 14px;
+              //&.search-inactive{
+              //  visibility: hidden;
+              //}
+              &:focus{
+                border-color: #3d81d3;
+                box-shadow: inset 0 1px 1px rgba(61, 129, 211,.6), inset 0 0 8px rgba(61, 129, 211,.6);
+                //opacity: .6;
+              }
+              &::-webkit-input-placeholder{
+                color: #ffffff;
+                opacity: .7;
+                font-size: 14px;
+              }
+              &:-moz-placeholder{
+                color: #ffffff;
+                opacity: .7;
+                font-size: 14px;
+              }
+              &::-moz-placeholder{
+                color: #ffffff;
+                opacity: .7;
+                font-size: 14px;
+              }
+              &:-ms-input-placeholde{
+                color: #ffffff;
+                opacity: .7;
+                font-size: 14px;
+              }
+            }
+            .search--icon{
+              position: absolute;
+              top: 23px;
+              //left: 35px;
+              left: 15px;
+              outline: none;
+            }
+            .remove--btn{
+              position: absolute;
+              top: 20px;
+              right: 5px;
+              opacity: 0.8;
+              transition-duration: 0.4s;
+              transition-timing-function: ease-in-out;
+              transition-property: all;
+              &.delete-inactive{
+                visibility: hidden;
+              }
+            }
+            .search-input-animation{
+              transition-duration: 0.4s;
+              transition-timing-function: ease-in-out;
+              transition-property: all;
+              width: 0px;
+              opacity: 0;
+            }
+            .search-active{
+              width:360px;
+              opacity: 1;
+            }
+            .delete-active{
+              right: 10px !important;
+            }
+            .delete-inactive{
+          
+            }
+          
+            .missionList{
+              transition-duration: 0.4s;
+              transition-timing-function: ease-in-out;
+              transition-property: all;
+          
+            }
+            .missionList.ng-show{
+              opacity: 1;
+              transform: translateX(0px);
+            }
+            .missionList.ng-hide{
+              opacity: 0;
+              transform: translateX(-50px);
+            }
+            .tip-show-animate{
+              transition-duration: 0.4s;
+              transition-timing-function: ease-in-out;
+              transition-property: all;
+              background-color:rgba(15,15,15,0.7);
+              height: 100px;
+              z-index: 99;
+            }
+            .hiddenTreeTool{
+              padding: 0 !important;
+              width: 0;
+              overflow: hidden;
+            }
+            .showTreeTool{
+              width: 200px;
+            }
+            .show-set-rule-add-tool {
+              //height: 200px;
+              //padding: 20px;
+              border-radius: 5px;
+              overflow: hidden;
+              opacity: 1;
+              z-index:70;
+              //width: 200px;
+            }
+            .hide-set-rule-add-tool {
+              padding: 0 !important;
+              height: 0px;
+              overflow: hidden;
+              opacity: 0;
+            }
+            .ruleSet-attr-name{
+              margin-right: 8px;
+              font-size: 13px;
+              cursor: pointer;
+              &.selected{
+                display: inline-block;
+                height: 36px;
+                line-height: 36px;
+                vertical-align: middle;
+                text-align: center;
+                border-radius: 2px;
+                box-sizing: border-box;
+                outline: none;
+                border: 0;
+                background: #40B98E !important;
+                color: #ffffff !important;
+                padding: 0 12px;
+                box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+                margin: 0;
+                text-decoration: none;
+                font-size: 13px;
+              }
+            }
+            .set-rule-add-tool-box{
+              position: absolute;
+              top: 38px;
+              left: 8px;
+              background-color: white;
+              transition-duration: 0.2s;
+              transition-timing-function: ease-in-out;
+              transition-property: all;
+              .et-rule-add-tool-row{
+                display: block;
+                //width: 220px;
+                width: 325px;
+                margin-bottom: 10px;
+              }
+              .set-rule-add-tool_attr{
+                display: inline-block;
+                vertical-align: middle;
+                //width: 60px;
+                width: 80px;
+                margin-right: 6px;
+                text-align: right;
+              }
+              .set-rule-add-tool_value{
+                display: inline-block;
+                vertical-align: middle;
+                //width: 145px;
+                width: 185px;
+              }
+            }
+            .rule--set--add--rule--modal--prompt--content{
+              line-height: normal;
+              margin-bottom: 30px;
+            }
+            .rule--set--modal--footer{
+              border-top: 1px solid #e4e4e4;
+              padding: 20px;
+              display: flex;
+              justify-content: flex-end;
+            }
+            .rule--set--modal--header{
+              font-size: 20px;
+              letter-spacing: .005em;
+              box-sizing: border-box;
+              font-weight: 400;
+              display: flex;
+              align-items: center;
+              flex-direction: row;
+              width: 100%;
+              height: 64px;
+              max-height: 64px;
+              padding: 0 16px;
+              margin: 0;
+              justify-content: space-between;
+            }
+            .rule--set--modal--content{
+              padding: 20px;
+            }
+          }
+    }
+}
